@@ -1,0 +1,44 @@
+\contentsline {section}{\numberline {1},}{1}{section.1}%
+\contentsline {section}{\numberline {2},}{1}{section.2}%
+\babel@toc {russian}{}\relax 
+\contentsline {section}{Введение}{6}{section*.4}%
+\contentsline {section}{\numberline {3}Обзор литературных источников}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Документация Python}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Документация FastAPI}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Документация Pydantic}{7}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Документация PostgreSQL}{8}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Постановка задачи и обзор аналогичных решений}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Постановка задачи}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Обзор аналогичных решений}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Выводы}{11}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Проектирование web-приложения}{12}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Функциональность web-приложения}{12}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Структура базы данных}{15}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Архитектура web-приложения}{26}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Выводы}{28}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Реализация web-приложения}{30}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Обоснование выбора программной платформы}{30}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Реализация серверной части web-приложения}{30}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {6.2.1}Изменение учётной записи}{30}{subsubsection.6.2.1}%
+\contentsline {subsubsection}{\numberline {6.2.2}Просмотр открытых сессий}{31}{subsubsection.6.2.2}%
+\contentsline {subsubsection}{\numberline {6.2.3}Завершение открытых сессий}{31}{subsubsection.6.2.3}%
+\contentsline {subsubsection}{\numberline {6.2.4}Изменение списка исходных статей}{31}{subsubsection.6.2.4}%
+\contentsline {subsubsection}{\numberline {6.2.5}Изменение списка переведённых статей}{32}{subsubsection.6.2.5}%
+\contentsline {subsubsection}{\numberline {6.2.6}Изменение списка жалоб на переводы своих статей}{32}{subsubsection.6.2.6}%
+\contentsline {subsubsection}{\numberline {6.2.7}Просмотр своих уведомлений}{32}{subsubsection.6.2.7}%
+\contentsline {subsubsection}{\numberline {6.2.8}Изменение списка комментариев к жалобам на переводы своих статей}{33}{subsubsection.6.2.8}%
+\contentsline {subsubsection}{\numberline {6.2.9}Изменение списка настроек переводчика}{33}{subsubsection.6.2.9}%
+\contentsline {subsubsection}{\numberline {6.2.10}Регистрация}{33}{subsubsection.6.2.10}%
+\contentsline {subsubsection}{\numberline {6.2.11}Аутентификация}{34}{subsubsection.6.2.11}%
+\contentsline {subsubsection}{\numberline {6.2.12}Изменение списка открытых жалоб}{34}{subsubsection.6.2.12}%
+\contentsline {subsubsection}{\numberline {6.2.13}Создание комментариев для жалоб}{34}{subsubsection.6.2.13}%
+\contentsline {subsubsection}{\numberline {6.2.14}Просмотр статистики жалоб}{34}{subsubsection.6.2.14}%
+\contentsline {subsubsection}{\numberline {6.2.15}Изменение списка стилей перевода}{34}{subsubsection.6.2.15}%
+\contentsline {subsubsection}{\numberline {6.2.16}Изменение списка моделей перевода}{35}{subsubsection.6.2.16}%
+\contentsline {subsubsection}{\numberline {6.2.17}Изменение списка пользователей}{35}{subsubsection.6.2.17}%
+\contentsline {subsection}{\numberline {6.3}Реализация базы данных}{36}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Технико-экономическое обоснование проекта}{37}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Общая характеристика разрабатываемого программного средства}{37}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Методика обоснования цены}{37}{subsection.7.2}%
+\contentsline {subsubsection}{\numberline {7.2.1}Стоимость разработки}{38}{subsubsection.7.2.1}%
+\contentsline {subsubsection}{\numberline {7.2.2}Цена продажи}{40}{subsubsection.7.2.2}%

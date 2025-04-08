@@ -1,0 +1,1028 @@
+\documentclass[14pt]{extarticle}
+
+% GOPOTA START
+\usepackage{fontspec}
+% \usepackage{tempora}
+\setmainfont{Times New Roman}
+\usepackage{indentfirst}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{chngcntr}
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage[russian]{babel}
+
+\usepackage[a4paper, left=23mm, right=10mm, top=20mm, bottom=15mm]{geometry} % Page margins
+\usepackage{setspace} % For single line spacing
+\singlespacing
+
+\usepackage{titlesec} % For customizing section titles
+\usepackage{fancyhdr} % For page numbers
+\usepackage{graphicx} % For including images
+\usepackage{tocloft} % For customizing table of contents
+% \usepackage{changepage} % For page layout adjustments
+\usepackage{hyperref}
+
+% Paragraph indentation
+\setlength{\parindent}{12.5mm}
+
+% Page numbers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt} % Remove header line
+
+% Customize section titles
+\titleformat{\section}
+  [hang]
+  {\normalfont\normalsize\bfseries}
+  {\thesection}
+  {6pt}
+  {}
+  [\thispagestyle{empty}]
+\titleformat{name=\section,numberless}
+  [block]
+  {\normalfont\normalsize\bfseries}
+  {}
+  {0pt}
+  {\centering}
+  [\thispagestyle{empty}]
+\titleformat{\subsection}
+  [hang]
+  {\normalfont\bfseries}
+  {\thesubsection}
+  {6pt}
+  {}
+\titleformat{\subsubsection}
+  [hang]
+  {\normalfont\bfseries}
+  {\thesubsubsection}
+  {6pt}
+  {}
+
+\titlespacing{\section}
+  {12.5mm}   % Left margin - matches your paragraph indentation
+  {3.5ex plus 1ex minus .2ex} % Space above the title (default value)
+  {2.3ex plus .2ex}          % Space below the title (default value)
+
+\titlespacing{\subsection}
+  {12.5mm}            % Indent from left margin
+  {18pt}              % Space above standalone subsections
+  {12pt}              % Space below subsections
+\titlespacing{name=\section,numberless}
+  {0pt}   % No left margin (maintains centering)
+  {3.5ex plus 1ex minus .2ex}
+  {2.3ex plus .2ex}
+
+\titlespacing{\subsubsection}
+  {12.5mm}            % Indent from left margin
+  {18pt}              % Space above standalone subsections
+  {12pt}              % Space below subsections
+
+% images setup
+
+% Reset figure counter at each section
+\counterwithin{figure}{section}
+
+% Format caption as "X.Y – Caption text" with en-dash
+\DeclareCaptionLabelFormat{sectionimage}{#1~#2~--~}
+\captionsetup{
+  labelformat=sectionimage,
+  labelsep=none,
+  skip=12pt,  % Space between image and caption
+  belowskip=-10pt  % Reduce space after caption (adjust this value)
+}
+\captionsetup[figure]{name=Рисунок}  % Change from "Рис." to "Рисунок"
+% Set spacing around figures
+\setlength{\intextsep}{14pt}  % Space before and after figure
+
+% Command for image with optional border
+\newcommand{\borderedimage}[3][1\linewidth]{%
+  \ifthenelse{\equal{#3}{yes}}{%
+    \fbox{\includegraphics[width=#1]{#2}}%
+  }{%
+    \includegraphics[width=#1]{#2}%
+  }%
+}
+
+% debugging
+% \usepackage{layout}
+% \newcommand{\showspace}[1]{%
+%   \vspace{-#1}\rule{1cm}{0.2pt}\vspace{#1-0.2pt}%
+% }
+% \usepackage{lua-visual-debug}
+
+% tables
+\usepackage{longtable}     % For multi-page tables
+\usepackage{array}         % For advanced column formatting
+\usepackage{caption}       % For caption customization
+\usepackage{chngcntr}      % For counter resetting
+\usepackage{calc}          % For width calculations
+
+% Reset table counter at each section
+\counterwithin{table}{section}
+
+% Make longtable use full text width
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+
+\captionsetup[longtable]{
+    labelsep=none, % remove separator from "Continuation of table"
+    skip=-8pt, % reduce space above "Continuation of table" to visually align with "Table ..."
+    position=above, % position continuation text above the table body
+    justification=raggedright,
+    singlelinecheck=off, % disable centering for single line captions (for continuation text as well)
+    margin=0pt, % no margin/indentation for continuation text
+    aboveskip=0pt, % no extra space above continuation text
+    belowskip=6pt, % space below continuation text, adjust as needed for visual balance
+}
+
+% lists
+\setlist[itemize]{
+    label=--,
+    labelindent=\parindent,
+    leftmargin=*, % Use '*' to make leftmargin dependent on labelindent
+    labelsep=1em, % Adjust this spacing if needed
+    align=parleft, % Crucial for hanging indent effect
+    topsep=0pt,
+    partopsep=0pt,
+    itemsep=0pt,
+    parsep=0pt,
+}
+
+% equations
+\usepackage{amsmath} % for equation and text
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\counterwithin{equation}{section}
+
+% listings
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{courier}
+
+\newcounter{listing}[section]
+% \renewcommand{\thelisting}{\thesection.\arabic{listing}}
+
+\lstdefinestyle{mystyle}{
+    basicstyle=\fontfamily{pcr}\selectfont\fontsize{12pt}{14.4pt}\selectfont,
+    % breakatwhitespace=false,
+    % breaklines=true,
+    captionpos=b,
+    % keepspaces=true,
+    frame=single,
+}
+
+\lstset{style=mystyle}
+
+% GOPOTA END
+
+
+\begin{document}
+\clearpage
+\section*{Реферат}
+Пояснительная записка содержит 1 страницу, 1 рисунок, 1 таблицу,
+1 источник, 1 приложение. 
+
+WEB-ПРИЛОЖЕНИЕ, FASTAPI, POSTGRESQL, VUE.JS, DOCKER
+
+Объектом дипломного проекта является web-приложение для перевода текста ограниченного объёма с иностранного языка с применением сервиса «g4f».
+
+Основной целью дипломного проекта является разработка веб-приложения для перевода текста ограниченного объёма с иностранного языка с применением сервиса «g4f». В разработке дипломного проекта была использована платформа FastAPI, язык программирования Python, технология Vue.js, протокол обмена данными HTTP.
+
+Пояснительная записка состоит из введения, семи разделов и заключения.
+
+В первом разделе описана литература, использовавшаяся при разработке дипломного проекта.
+
+Во втором разделе описаны цель и задачи дипломного проекта, обзор аналогов и обзор средств разработки.
+
+В третьем разделе представлены архитектура web-приложения, проектирование и структура таблиц базы данных.
+
+Четвёртый раздел посвящен разработке web-приложения.
+
+Пятый раздел посвящен тестированию web-приложения.
+
+В шестом разделе приведено руководство программиста.
+
+В седьмом разделе приводится расчет экономических параметров и себестоимость программного продукта.
+
+В заключении представлены итоги дипломного проекта и задачи, которые были решены в ходе разработки программного средства.
+
+\clearpage
+\section*{Abstract}
+СЮДА ПЕРЕВОД
+
+% Table of Contents
+\clearpage
+\tableofcontents
+
+% \customunorderedsection{Введение}
+\clearpage
+\section*{Введение}
+\addcontentsline{toc}{section}{Введение}
+
+Тема проекта «Web-приложение «GPTranslate» для перевода текста ограниченного объёма с иностранного языка с применением сервиса «g4f»» означает, что результатом выполнения проекта является web-приложение, позволяющее пользователям переводить текст на исходном языке в текст на другом языке (например, с польского языка на немецкий) с использованием внешнего сервиса «g4f», предоставляющего доступ к нейронным сетям. Доступ к внешнему сервису осуществляется по его API. Ограниченный объём текста означает, что в web-приложении установлено ограничение на максимальную длину исходного текста.
+
+Основная цель проекта – повысить эффективность и увеличить скорость перевода текста за счёт использования внешних сервисов, а также предоставить пользователям механизм обратной связи для улучшения сервиса.
+
+Для достижения поставленной цели в рамках дипломного проекта были сформулированы следующие задачи: в разделе 1 провести анализ существующих сервисов перевода и выявить их преимущества и недостатки; в разделе 2 разработать архитектуру и структуру приложения, включая выбор технологий и структуру базы данных; в разделе 3 описать программную разработку с реализацией ключевых функций; в разделе 4 провести тестирование функционала и производительности; в разделе 5 подготовить техническую документацию и инструкции по развёртыванию приложения.
+
+Целевая аудитория приложения включает широкий спектр пользователей: от профессиональных переводчиков и сотрудников международных компаний до владельцев web-сайтов и блогеров, нуждающихся в качественном и быстром переводе своих материалов.
+
+Для реализации web-приложения было решено использовать язык программирования Python и фреймворк FastAPI из-за высокой гибкости, распространённости и простоты данных технологий.
+
+\clearpage
+\section{Обзор литературных источников}
+\subsection{Документация Python}
+
+Официальная документация Python представляет собой комплексную систему материалов, организованную по принципу "от простого к сложному". Она выделяется среди других языков своей полнотой и доступностью изложения. Она включает в себя следующие ключевые разделы: учебник для начинающих (пошаговое введение в синтаксис и концепции языка, построенное по принципу "сценарной документации", что позволяет новичкам быстро добиваться нужных результатов по заранее расписанным шагам), справочник по библиотеке (исчерпывающее описание стандартной библиотеки, включающее подробные примеры использования каждого модуля), справочник по языку (детальное описание синтаксиса и семантики языка, включая формальные определения и спецификации), а также руководство по расширению и внедрению Python (информация для разработчиков, создающих модули на языках программирования C/C++ или встраивающих интерпретатор Python в другие приложения).
+
+Документация Python решает следующие проблемы: обеспечение единого понимания языка среди разработчиков, стандартизация использования встроенных возможностей и библиотек, снижение порога вхождения для новых разработчиков, выступление в качестве авторитетного источника при разрешении технических споров и неоднозначностей.
+
+
+
+\subsection{Документация FastAPI}
+
+Документация фреймворка FastAPI предоставляет полную информацию для использования данной технологии. Она содержит руководство пользователя для быстрого начала работы, пошаговые инструкции к различным аспектам фреймворка с пояснениями каждого шага и примерами для различных версий смежных технологий (например, с использованием typing.List в Python 3.8 и list в Python 3.9 и позднее), а также описание взаимодействия с прочими технологиями (например, Starlette и Pydantic).
+
+Кроме того, документация предоставляет доступ к описанию типов, классов и функций с их подробным описанием, что позволяет ускорить разработку приложений. Также документация предоставляет рекомендации по развёртыванию приложений в продуктовых окружениях и настройке в случае нахождения за прокси.
+
+\subsection{Документация Pydantic}
+
+Документация библиотеки валидации Pydantic организована как интерактивное руководство, сочетающее теоретические объяснения с практическими примерами. Она выделяется среди других библиотек своим подходом "проблема - решение", где каждый раздел начинается с описания конкретной задачи разработки, за чем следует описание её решения.
+
+Так же, как документация FastAPI, документация Pydantic содержит руководство для начинающих для быстрого начала работы, руководства по основным аспектам библиотеки, а также раздел с описанием функций и классов, реализуемых библиотекой. Документация позволяет узнать, каким образом проектировать и реализовывать надёжные API с сериализацией и валидацией.
+
+\subsection{Документация PostgreSQL}
+
+Документация СУБД PostgreSQL представляет исчерпывающее руководство по ключевым аспектам применения данной технологии, а также инструкции по развёртыванию и использованию. Кроме того, документация содержит полное описание диалекта PostgreSQL с примерами использования, что позволяет лучше изучить его для полноценного использования СУБД.
+
+Кроме того, документация описывает внутренне устройство СУБД, включая индексы, системы обеспечения согласованности, доступности, репликации, партиционирования и шардирования, и заметки к выпуску каждой новой версии, включая мелкие и крупные изменения.
+
+Документация PostgreSQL предоставляет исчерпывающую информацию о возможностях системы, облегчает процесс настройки и оптимизации производительности, помогает в проектировании схемы данных и разработке сложных запросов, а также служит справочником при решении проблем и отладке ошибок.
+
+
+
+\clearpage
+\section{Постановка задачи и обзор аналогичных решений}
+\subsection{Постановка задачи}
+
+Web-приложение должно позволять пользователю зарегистрироваться по адресу имени, электронной почты и паролю, подтвердить адрес электронной почты по ссылке из электронного письма, аутентифицироваться по адресу электронной почты и паролю, создать конфигурацию переводчика, загрузить исходную статью с введённым с клавиатуры текстом или при помощи загруженного текстового файла, выполнить перевод, используя созданную ранее конфигурацию переводчика, получить уведомление о завершении перевода, просмотреть переведённую статью. В случае, если перевод не удовлетворяет пользователя, web-приложение должно позволять пользователю создать жалобу на перевод, а модератору – просмотреть жалобу и удовлетворить либо отклонить её.
+
+\subsection{Обзор аналогичных решений}
+
+
+Одним из самых популярных сервисов по переводу текста с одного языка на другой является DeepL. Он предоставляет возможность перевода текста между различными языками, распознавание голоса, загрузку файлов и пересказ текста. Внешний вид страницы сервиса представлен на рисунке \ref{img:deepl}.
+
+\begin{figure}[H]
+    \centering
+    \borderedimage[0.9\linewidth]{img/analog-1.jpg}{yes}
+    \caption{Страница сервиса DeepL \label{img:deepl}}
+\end{figure}
+Данный сервис применяет нейронные сети для перевода текста, что положительно сказывается на качестве перевода текста.
+
+В качестве второго аналогичного решения был рассмотрен сервис Google Translate. Внешний вид страницы данного сервиса представлен на странице \ref{img:gtranslate}.
+
+\begin{figure}[H]
+    \centering
+    \borderedimage[0.85\linewidth]{img/analog-2.jpg}{yes}
+    \caption{Страница сервиса Google Translate \label{img:gtranslate}}
+\end{figure}
+Это один из самых известных и широко используемых сервисов машинного перевода. Он также предоставляет возможность перевода текстовых файлов, а также более широкий выбор языков по сравнению с DeepL.
+
+В качестве третьего аналогичного решения был рассмотрен сервис Wordvice. Внешний вид его страницы представлен на рисунке \ref{img:wordvice}.
+
+\begin{figure}[H]
+    \centering
+    \borderedimage[0.9\linewidth]{img/analog-3.jpg}{yes}
+    \caption{Страница сервиса Wordvice \label{img:wordvice}}
+\end{figure}
+
+Он также использует нейронные сети для перевода текста, предоставляет интеграцию с Microsoft Word и услуги обобщения и перефразирования текста при помощи искусственного интеллекта, а также поддерживает множество языков.
+
+\subsection{Выводы}
+
+\begin{enumerate}
+    \item Был рассмотрен сценарий использования web-приложения, что позволяет выделить ключевые функции web-приложения.
+    \item Анализ существующих решений в области перевода текста выявил как преимущества, так и недостатки сервисов-конкурентов. Сервисы DeepL, Google Translate и Wordvice предоставляют базовый функционал, включая перевод текста, загрузку текстовых документов и выбор языков. Среди ключевых недостатков отмечается отсутствие персонализации, невозможность выбора средства выполнения перевода и его стиля, а также отсутствие жалоб на переводы.
+\end{enumerate}
+
+\clearpage
+\section{Проектирование web-приложения}
+\subsection{Функциональность web-приложения}
+Функциональные возможности web-приложения представлены в диаграмме вариантов использования, представленной на рисунке \ref{img:usecase}.
+\begin{figure}[H]
+    \centering
+    \borderedimage[0.95\linewidth]{img/use-case.jpg}{yes}
+    \caption{Диаграмма вариантов использования web-приложения \label{img:usecase}}
+\end{figure}
+Перечень ролей и их назначение приведены в таблице \ref{tab:user_roles}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Назначение ролей пользователей в web-приложении \label{tab:user_roles}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Роль & Назначение \\ \hline
+    Гость & Регистрация и аутентификация \\ \hline
+    Пользователь & Загрузка и запуск перевода статей, получение переводов, создание жалоб на переводы своих статей \\ \hline
+    Модератор & Рассмотрение жалоб на переводы \\ \hline
+    Администратор & Управление пользователями, запросами перевода, моделями перевода \\ \hline
+\end{longtable}
+
+Функциональные возможности пользователя с ролью «Гость» представлены в таблице \ref{tab:guest_functions}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Функциональные возможности пользователя с ролью «Гость» \label{tab:guest_functions}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Вариант использования & Пояснение \\ \hline
+    12 Регистрироваться & Гость может создать учётную запись при помощи электронной почты и пароля или OAuth 2.0-провайдера \\ \hline
+    13 Аутентифицироваться & Гость может аутентифицироваться при помощи электронной почты и пароля или OAuth 2.0-провайдера \\ \hline
+\end{longtable}
+
+После аутентификации гость становится либо пользователем, либо модератором, либо администратором. По этой причине пользователю недоступна аутентификация. Функциональные возможности пользователя с ролью «Пользователь» представлены в таблице \ref{tab:user_functions}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Функциональные возможности пользователя с ролью «Пользователь» \label{tab:user_functions}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Вариант использования & Пояснение \\ \hline
+    1 Изменять учётную запись & Изменять своё имя и пароль \\ \hline
+    2 Просматривать список открытых сессий & Получать список открытых сессий \\ \hline
+    3 Завершать открытые сессии & Блокировать доступ для всех открытых сессий \\ \hline
+    4 Изменять список исходных статей & Загружать из файла или вводить с клавиатуры исходные статьи, получать список исходных статей, изменять содержимое исходных статей, удалять их \\ \hline
+    5 Изменять список переведённых статей & Запускать перевод исходных статей, получать их список, оставлять оценку переводам статей, удалять переводы статей \\ \hline
+    6 Изменять список жалоб на переводы своих статей & Создавать жалобы на переводы своих статей, получать их список, закрывать открытые жалобы на переводы своих статей \\ \hline
+    7 Просматривать свои уведомления & Получать список непрочитанных уведомлений \\ \hline
+    8 Изменять список комментариев к жалобам на переводы своих статей & Получать список комментариев, создавать комментарии к открытым жалобам на переводы своих статей \\ \hline
+    9 Получить список комментариев к жалобе & Получить список комментариев к одной из своих жалоб \\ \hline
+    10 Создать комментарий & Создать комментарий к одной из своих жалоб \\ \hline
+    11 Изменять список настроек переводчика & Получать список своих конфигураций, создавать новые, обновлять и удалять существующие конфигурации \\ \hline
+\end{longtable}
+
+Модератор может рассматривать жалобы пользователей. Его функциональные возможности представлен в таблице \ref{tab:moderator_functions}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Функциональные возможности пользователя с ролью «Модератор» \label{tab:moderator_functions}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Вариант использования & Пояснение \\ \hline
+    1 Изменять учётную запись & Изменять своё имя и пароль \\ \hline
+    2 Просматривать список открытых сессий & Получать список открытых сессий \\ \hline
+    3 Завершать открытые сессии & Блокировать доступ для всех открытых сессий \\ \hline
+    14 Изменять список открытых жалоб & Получать список открытых жалоб на переводы, получать списки комментариев и создавать новые комментарии к ним, принимать или отклонять жалобы \\ \hline
+    15 Создавать комментарии для жалоб & Создавать комментарии для открытой жалобы \\ \hline
+\end{longtable}
+
+Функциональные возможности администратора представлен в таблице \ref{tab:admin_functions}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Функциональные возможности пользователя с ролью «Администратор» \label{tab:admin_functions}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Вариант использования & Пояснение \\ \hline
+    1 Изменять учётную запись & Изменять своё имя и пароль \\ \hline
+    2 Просматривать список открытых сессий & Получать список открытых сессий \\ \hline
+    3 Завершать открытые сессии & Блокировать доступ для всех открытых сессий \\ \hline
+    16 Просматривать статистику жалоб & Получать данные о том, какая часть переводов при помощи каждой модели получает жалобы и какая их доля удовлетворяется модераторами \\ \hline
+    17 Изменять список стилей перевода & Создавать новые стили, обновлять и удалять существующие \\ \hline
+    18 Изменять список моделей перевода & Добавлять информацию о новых моделях, изменять и удалять существующие записи \\ \hline
+    19 Изменять список пользователей & Получать список пользователей, создавать новых, изменять и удалять существующих \\ \hline
+    20 Создавать пользователей & Создавать объекты пользователей с ролью пользователя \\ \hline
+    21 Создавать модераторов & Создавать объекты пользователей с ролью модератора \\ \hline
+    22 Создавать администраторов & Создавать объекты пользователей с ролью администратора \\ \hline
+\end{longtable}
+
+Таким образом, пользователю доступны базовые операции, такие как операции над статьями и настройками перевода, модераторы могут управлять жалобами, а администраторы – управлять пользователями, моделями, запросами перевода и просматривать статистику жалоб на переводы.
+
+\subsection{Структура базы данных}
+
+Согласно схеме вариантов использования была создана база данных. Её структура представлена на рисунке \ref{img:db_logic}.
+
+\begin{figure}[H]
+    \centering
+    \borderedimage[1\linewidth]{img/db-logic.jpg}{yes}
+    \caption{Логическая схема базы данных \label{img:db_logic}}
+\end{figure}
+
+База данных содержит тринадцать таблиц, хранящих информацию о пользователях, сессиях, статьях и прочих данных. Типы данных были выбраны согласно [1]. Назначение таблиц базы данных представлено в таблице \ref{tab:tables_purpose}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:tables_purpose}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Таблица & Назначение \\ \hline
+    Users & Хранит информацию о пользователях (имя, адрес электронной почты и хеш пароля для аутентификации и так далее) \\ \hline
+    Sessions & Хранит информацию о сессиях пользователей (идентификатор пользователя, флаг активности, время создания и так далее) \\ \hline
+    Confirmation\_codes & Хранит информацию о кодах подтверждения адреса электронной почты и сброса пароля \\ \hline
+    Languages & Хранит информацию о доступных для перевода языках (название, ISO код) \\ \hline
+    Articles & Хранит информацию о статьях (заголовок, текст, идентификатор пользователя и так далее) \\ \hline
+    Report\_reasons & Хранит информацию о доступных причинах для жалобы на перевод статьи (текст, позиция в списке для сортировки) \\ \hline
+    Reports & Хранит информацию о жалобах на переводы статей (идентификатор статьи, текст, идентификатор, причина и так далее) \\ \hline
+    Report\_comments & Хранит информацию о комментариях к жалобам на переводы статей (текст, идентификатор пользователя, идентификатор жалобы, дата и время создания) \\ \hline
+    Style\_prompts & Хранит информацию о запросах перевода с разными стилями (название, текст и так далее) \\ \hline
+    AI\_Models & Хранит информацию о моделях искусственного интеллекта, использующихся для перевода (название, поставщик и так далее) \\ \hline
+    Configs & Хранит информацию о конфигурациях переводчика, которые могут использоваться пользователями для упрощения запуска перевода своих статей (идентификаторы запроса перевода, модели, языков и так далее) \\ \hline
+    Translation\_tasks & Хранит информацию о задачах перевода, которые считываются отдельным процессом и выполняются им (идентификаторы статьи, модели, исходного и конечного языков, статус и так далее) \\ \hline
+    Notifications & Хранит информацию об уведомлениях пользователей (идентификатор пользователя, текст, тип уведомления и так далее) \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы Users представлено в таблице \ref{tab:structure_users}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Описание таблицы Users \label{tab:structure_users}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & uuid & Идентификатор пользователя, первичный ключ  \\ \hline
+    name & varchar (20) & Имя пользователя \\ \hline
+    email & varchar (50) & Адрес электронной почты пользователя \\ \hline
+    email\_verified & boolean & Флаг, указывающий, был ли подтверждён адрес электронной почты пользователя \\ \hline
+    password\_hash & varchar (60) & Хеш пароля соискателя \\ \hline
+    role & enum user\_role & Роль пользователя (пользователь, модератор, администратор) \\ \hline
+    logged\_with\_provider & varchar & Название провайдера OAuth 2.0, использовавшегося для регистрации \\ \hline
+    provider\_id & varchar & Идентификатор пользователя, полученный от провайдера OAuth при регистрации \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания пользователя без часового пояса \\ \hline
+    deleted\_at & timestamp without timezone & Дата и время удаления пользователя без часового пояса \\ \hline
+\end{longtable}
+
+Таблица Sessions хранит данные о сессиях пользователей. Описание её столбцов представлено в таблице \ref{tab:structure_sessions}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Описание таблицы Sessions \label{tab:structure_sessions}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & uuid & Идентификатор сессии, первичный ключ \\ \hline
+    user\_id & uuid & Идентификатор пользователя, который создал данную сессию, внешний ключ \\ \hline
+    ip & varchar (15) & IPv4 адрес узла, из которого была открыта сессия \\ \hline
+    user\_agent & varchar (100) & User agent клиента (например, браузера) \\ \hline
+    is\_closed & boolean & Флаг, указывающий, была ли сессия закрыта \\ \hline
+    refresh\_token\_id & uuid & Идентификатор refresh токена, связанного с данной сессией \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания сессии без часового пояса \\ \hline
+    closed\_at & timestamp without timezone & Дата и время закрытия сессии без часового пояса \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы Confirmation\_codes представлено в таблице \ref{tab:structure_conf_codes}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_conf_codes}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & integer & Идентификатор кода, первичный ключ \\ \hline
+    code & varchar & Строковое значение кода \\ \hline
+    reason & enum confirmationtype & Тип кода (подтверждение адреса электронной почты, сброс пароля) \\ \hline
+    user\_id & uuid & Идентификатор пользователя, для которого предназначен данный код подтверждения, внешний ключ \\ \hline
+    expired\_at & timestamp without timezone & Временная отметка, после которой код будет считаться истёкшим \\ \hline
+    is\_used & boolean & Флаг, указывающий, был ли код использован \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания кода без часового пояса \\ \hline
+\end{longtable}
+
+Таблица Languages хранит информацию о языках, доступных для перевода. Описание её столбцов представлено в таблице \ref{tab:structure_languages}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_languages}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & integer & Идентификатор языка, первичный ключ  \\ \hline
+    name & varchar & Отображаемое название языка \\ \hline
+    iso\_code & varchar & ISO код языка \\ \hline
+\end{longtable}
+
+Таблица Articles хранит информацию об исходных и переведённых статьях. Описание её столбцов представлено в таблице \ref{tab:structure_articles}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_articles}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & uuid & Идентификатор статьи, первичный ключ \\ \hline
+    title & varchar (50) & Название статьи \\ \hline
+    text & text & Текст статьи \\ \hline
+    user\_id & uuid & Идентификатор пользователя, которому принадлежит статья, внешний ключ \\ \hline
+    language\_id & integer & Идентификатор языка статьи, внешний ключ \\ \hline
+    original\_article\_id & uuid & Идентификатор статьи, переводом которой является данная статья, внешний ключ \\ \hline
+    like & boolean & Флаг, указывающий, какую оценку пользователь поставил переводу (положительную, отрицательную, не поставил оценку) \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания статьи без часового пояса \\ \hline
+    deleted\_at & timestamp without timezone & Дата и время удаления статьи без часового пояса \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы Report\_reasons представлено в таблице \ref{tab:structure_report_reasons}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_report_reasons}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & integer & Идентификатор причины, первичный ключ \\ \hline
+    text & varchar & Текст причины \\ \hline
+    order\_position & integer & Положение причины в списке при сортировке \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы Reports представлено в таблице \ref{tab:structure_reports}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_reports}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & uuid & Идентификатор жалобы, первичный ключ \\ \hline
+    text & varchar (1024) & Текст жалобы \\ \hline
+    article\_id & uuid & Идентификатор статьи, на которую была оставлена жалоба, внешний ключ \\ \hline
+    status & enum reportstatus & Статус жалобы (открыта, закрыта пользователем, отклонена, удовлетворена) \\ \hline
+    closed\_by\_user\_id & uuid & Идентификатор пользователя, закрывшего жалобу (пользователь, которому принадлежит статья или модератор), внешний ключ \\ \hline
+    reason\_id & int & Идентификатор причины, по которой была оставлена жалоба, внешний ключ \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания жалобы без часового пояса \\ \hline
+    closed\_at & timestamp without timezone & Дата и время закрытия жалобы без часового пояса \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы Report\_comments представлено в таблице \ref{tab:structure_report_comments}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_report_comments}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & uuid & Идентификатор комментария, первичный ключ \\ \hline
+    text & varchar (100) & Текст комментария \\ \hline
+    sender\_id & uuid & Идентификатор пользователя, оставившего комментарий, внешний ключ \\ \hline
+    report\_id & uuid & Идентификатор жалобы, к которой был оставлен комментарий, внешний ключ \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания комментария без часового пояса \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы Style\_prompts представлено в таблице \ref{tab:structure_prompts}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_prompts}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & integer & Идентификатор запроса, первичный ключ \\ \hline
+    title & varchar (20) & Название запроса \\ \hline
+    text & varchar & Текст запроса \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания запроса без часового пояса \\ \hline
+    deleted\_at & timestamp without timezone & Дата и время удаления запроса без часового пояса \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы AI\_Models представлено в таблице \ref{tab:structure_models}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_models}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & integer & Идентификатор модели, первичный ключ \\ \hline
+    show\_name & varchar (50) & Отображаемое название модели \\ \hline
+    name & varchar & Название модели \\ \hline
+    provider & varchar & Поставщик модели \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания записи о модели без часового пояса \\ \hline
+    deleted\_at & timestamp without timezone & Дата и время удаления записи о модели без часового пояса \\ \hline
+\end{longtable}
+
+Таблица Configs хранит информацию о конфигурациях переводчика. Описание её столбцов представлено в таблице \ref{tab:structure_configs}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_configs}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & integer & Идентификатор конфигурации, первичный ключ \\ \hline
+    name & varchar (20) & Название конфигурации \\ \hline
+    user\_id & uuid & Идентификатор пользователя, создавшего конфигурацию, внешний ключ \\ \hline
+    prompt\_id & integer & Идентификатор запроса перевода, внешний ключ \\ \hline
+    language\_ids & integer [] & Идентификаторы языков перевода \\ \hline
+    model\_id & integer & Идентификатор модели перевода, внешний ключ \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания конфигурации без часового пояса \\ \hline
+    deleted\_at & timestamp without timezone & Дата и время удаления конфигурации без часового пояса \\ \hline
+\end{longtable}
+
+Таблица Translation\_tasks хранит информацию о задачах перевода. Данная информация используется для определения текста исходной статьи, конечного языка и так далее. Описание столбцов таблицы представлено в таблице \ref{tab:structure_translation_tasks}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_translation_tasks}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & uuid & Идентификатор задачи, первичный ключ \\ \hline
+    article\_id & uuid & Идентификатор исходной статьи, внешний ключ \\ \hline
+    target\_language\_id & integer & Идентификатор конечного языка, внешний ключ \\ \hline
+    prompt\_id & integer & Идентификатор запроса перевода, внешний ключ \\ \hline
+    model\_id & integer & Идентификатор модели перевода, внешний ключ \\ \hline
+    status & enum translationtaskstatus & Статус задачи (создана, в процессе выполнения, завершена успешно, завершена с ошибкой) \\ \hline
+    data & jsonb & Дополнительная информация о задаче (текст ошибки) \\ \hline
+    translated\_article\_id & uuid & Идентификатор переведённой статьи, внешний ключ \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания задачи без часового пояса \\ \hline
+    deleted\_at & timestamp without timezone & Дата и время удаления задачи без часового пояса \\ \hline
+\end{longtable}
+
+Описание столбцов таблицы Notifications представлено в таблице \ref{tab:structure_notifications}.
+
+\begin{longtable}{|p{5cm}|p{5cm}|p{5cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:structure_notifications}} \\ \hline
+    \endfirsthead
+    \multicolumn{3}{l}{Продолжение таблицы \thetable} \endhead
+    Название столбца & Тип данных & Описание \\ \hline
+    id & uuid & Идентификатор уведомления, первичный ключ \\ \hline
+    title & varchar & Заголовок уведомления \\ \hline
+    text & varchar & Текст уведомления \\ \hline
+    user\_id & uuid & Идентификатор пользователя, которому предназначено уведомление, внешний ключ \\ \hline
+    type & enum notificationtype & Тип уведомления (информационное, предупреждение, ошибка) \\ \hline
+    created\_at & timestamp without timezone & Дата и время создания записи о модели без часового пояса \\ \hline
+    read\_at & timestamp without timezone & Дата и время удаления записи о модели без часового пояса \\ \hline
+\end{longtable}
+
+Назначение связей приведено в таблице \ref{tab:foreign_keys}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Назначение таблиц базы данных \label{tab:foreign_keys}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Связь & Назначение \\ \hline
+    Users.id -- Notifications.user\_id & Идентификатор пользователя, которому адресовано уведомление \\ \hline
+    Users.id -- Confirmation\_codes. user\_id & Идентификатор пользователя, которому предназначен код подтверждения \\ \hline
+    Users.id -- Sessions.user\_id & Идентификатор пользователя, который создал сессию \\ \hline
+    Users.id -- Articles.user\_id & Идентификатор пользователя, который загрузил статью или запустил перевод исходной статьи \\ \hline
+    Users.id -- Configs.user\_id & Идентификатор пользователя, которому принадлежит конфигурация переводчика \\ \hline
+    Users.id -- Commens.sender\_id & Идентификатор пользователя, отправившего комментарий \\ \hline
+    Users.id -- Reports. closed\_by\_user\_id & Идентификатор пользователя, закрывшего жалобу (создавшего её пользователя или любого модератора) \\ \hline
+    Report\_reasons.id -- Reports.reason\_id & Идентификатор причины, по которой была создана жалоба на перевод статьи \\ \hline
+    Articles.id -- Articles. original\_article\_id & Идентификатор исходной статьи, из которой был создан перевод \\ \hline
+    Articles.id -- Translation\_tasks. article\_id & Идентификатор статьи, которую необходимо перевести \\ \hline
+    Articles.id -- Translation\_tasks. translated\_article\_id & Идентификатор перевода статьи \\ \hline
+    Articles.id -- Reports.article\_id & Идентификатор перевода, на который была создана жалоба \\ \hline
+    Languages.id -- Articles.language\_id & Идентификатор языка статьи \\ \hline
+    Languages.id -- Translation\_tasks. target\_language\_id & Идентификатор конечного языка, на который необходимо перевести статью \\ \hline
+    Reports.id -- Comments.report\_id & Идентификатор жалобы, под которой был оставлен комментарий \\ \hline
+    AI\_Models.id -- Translation\_tasks. model\_id & Идентификатор записи о модели искусственного интеллекта, которая используется для перевода статьи \\ \hline
+    AI\_Models.id -- Configs.model\_id & Идентификатор записи о модели искусственного интеллекта \\ \hline
+    Style\_prompts.id -- Translation\_tasks. prompt\_id & Идентификатор запроса перевода, который используется для перевода статьи \\ \hline
+    Style\_prompts.id -- Configs.prompt\_id & Идентификатор запроса перевода \\ \hline
+\end{longtable}
+
+Таким образом, была спроектирована база данных для долговременного хранения информации web-приложения.
+
+\subsection{Архитектура web-приложения}
+
+Для обеспечения вспомогательных функций web-приложения (отправка почты, выполнение перевода, отправка уведомлений между компонентами системы и так далее) используются дополнительные компоненты.
+
+Для запуска многоконтейнерных Docker-приложений используется инструмент Docker Compose. Он управляет набором контейнеров, в которых работают прочие компоненты web-приложения.
+
+Для хранения данных используется СУБД PostgreSQL 17.
+
+Для обслуживания web-приложение и предоставления доступа к скомпилированному пакету фронтэнд-приложения, созданному с использованием Vue.js, используется web-сервер Nginx.
+
+Для асинхронного обмена сообщениями между компонентами системы используется брокер сообщений Apache Kafka.
+
+Для обработки сообщений, передаваемых через Kafka, используются два процесса-подписчика. Они принимают сообщения из очереди и обрабатывают поступившие команды, такие как перевод статьи и отправка электронной почты для подтверждения регистрации или сброса пароля.
+
+Для быстрого доступа к данным, которые часто используются, например, идентификаторам закрытых сессий, и для передачи уведомлений пользователю используется in-memory база данных Redis.
+
+Архитектура web-приложения представлена на рисунке \ref{img:arch}.
+
+\begin{figure}[H]
+    \centering
+    \borderedimage[1\linewidth]{img/architecture.jpg}{yes}
+    \caption{Архитектура web-приложения \label{img:arch}}
+\end{figure}
+
+Пояснение назначения каждого элемента web-приложения на архитектурной диаграмме представлено в таблице \ref{tab:arch_elements_purpose}.
+
+\begin{longtable}{|p{8cm}|p{8cm}|}
+    \caption[]{Назначение элементов архитектурной схемы web-приложения \label{tab:arch_elements_purpose}} \\ \hline
+    \endfirsthead
+    \multicolumn{2}{l}{Продолжение таблицы \thetable} \endhead
+    Элемент & Назначение \\\hline
+    Web Server (nginx) & Принимать запросы клиента, обеспечивать работу HTTPS, предоставлять статические файлы фронтэнд-части web-приложения \\\hline
+    Database Server (PostgreSQL) & Хранить данные, которые должны храниться длительное время \\\hline
+    Kafka & Обеспечивать обмен сообщениями между компонентами web-приложения \\\hline
+    Application Server & Обрабатывать запросы пользователя \\\hline
+    Translation consumer & Переводить статьи при помощи внешнего сервиса \\\hline
+    Mailing consumer & Отправлять электронные письма при помощи внешнего сервиса \\\hline
+    Redis & Хранить данные с маленьким сроком жизни, выступать транспортом для отправки уведомлений о завершении перевода статей \\\hline
+    zookeeper & Поддерживать работу Kafka, хранить информацию об участниках групп \\\hline
+    GPT provider & Переводить тексты по запросу \\\hline
+    Mailing service & Отправлять электронные письма по запросу \\\hline
+    Client (Vivaldi) & Отображать фронтэнд-часть web-приложения, отправлять запросы пользователя, отображать ответы сервера \\\hline
+\end{longtable}
+
+Таким образом, web-приложение состоит из различных компонентов, каждый из которых выполняет собственные функции.
+
+\subsection{Выводы}
+
+\begin{enumerate}
+    \item Была рассмотрена функциональность web-приложения «GPTranslate» для всех ролей: гостя, пользователя, модератора и администратора. Гостям доступна регистрация и аутентификация. Пользователи могут загружать статьи, переводить их, а также управлять своими конфигурациями переводчика и оставлять жалобы на переведённые статьи. Модераторы рассматривают жалобы, а администраторы могут управлять списками пользователей, моделей и стилей перевода, а также получать статистику жалоб по моделям и стилям перевода. Общее количество функций web-приложения составляет 22.
+    \item Рассмотрена логическая схема базы данных web-приложения, которая включает 13 таблиц. Таблицы хранят данные о пользователях, статьях, конфигурациях и других.
+    \item Рассмотрена архитектура web-приложения. Использование Kafka позволяет сервисам передавать сообщения между собой, Redis позволяет хранить данные с малым сроком жизни, а PostgreSQL – долговременные данные.
+\end{enumerate}
+
+\clearpage
+\section{Реализация web-приложения}
+\subsection{Обоснование выбора программной платформы}
+
+Для реализации web-приложения был выбран язык программирования Python [2] и фреймворк FastAPI [3]. FastAPI представляет собой web-фреймворк для создания API на языке Python. Он позволяет обрабатывать запросы асинхронно и поддерживает протокол WebSocket. Для сериализации, десериализации и валидации запросов использовалесь библиотека Pydantic [4].
+
+Для долговременного хранения данных web-приложения была выбрана распространённая СУБД PostgreSQL [5], обладающая следующими преимуществами: бесплатность, расширяемость, большое сообщество, широкая поддержка среди инструментов разработки программного обеспечения.
+
+Для создания моделей, соответствующих таблицам в реляционной базе данных, была выбрана библиотека SQLAlchemy [6]. Она предоставляет уровень абстракции над объектами базы данных, позволяя работать с ними как с объектами Python, а также предоставляет возможность создавать сложные запросы при помощи функций Python.
+
+Для управления миграциями был выбран инструмент Alembic [7]. Данный инструмент позволяет отслеживать изменения в структуре базы данных, а также предоставляет возможность автоматической генерации миграций на основе изменений в моделях. Также Alembic предоставляет возможность отката к более ранней версии базы данных.
+
+Для перевода текста используется сервис g4f [8]. Он выступает как посредник между web-приложением и публичными API различных провайдеров, обеспечивая работу web-приложения и упрощая его настройку. Сервис translation-consumer считывает задачи на перевод из очереди Kafka, отправляет запросы по указанному в переменных окружения адресу с необходимой полезной нагрузкой (текст, который нужно перевести, текст стиля перевода, название модели, название провайдера) и на основе полученных ответов создаёт объекты переведённых статей. 
+
+Для отправки электронной почты был выбран сервис Unisender [9], который предоставляет API для создания рассылок и отправки одиночных писем.
+
+\subsection{Реализация серверной части web-приложения}
+
+В соответствии с диаграммой вариантов использования функции, доступные пользователям, были реализованы в исходном коде. Исходный код web-приложения представлен в Приложении А.
+
+\subsubsection{Изменение учётной записи}
+
+Функция "изменение учётной записи" (1) в исходном коде реализована функциями change\_name, request\_password\_restoration\_code и restore\_password.
+
+Функция change\_name находится в модуле src.routers.users.views.py. Она принимает HTTP PATCH запрос по пути "/users/{user\_id}/name/" и изменяет имя пользователя на новое, полученное из тела запроса.
+
+Функция request\_password\_restoration\_code находится в модуле src.routers.auth.views.py. Она принимает HTTP POST запрос по пути "/auth/restore-password/request/" c адресом электронной почты пользователя в параметрах строки запроса, создаёт код подтверждения смены пароля в базе данных и отправляет письмо по адресу электронной почты со ссылкой на страницу смены пароля.
+
+Функция restore\_password находится в модуле src.routers.auth.views.py. Она принимает HTTP POST запрос по пути "/auth/restore-password/confirm/" с кодом подтверждения и новым паролем, проверяет существование полученного кода и изменяет хранимый в базе данных хэш пароля пользователя на хэш полученного нового пароля.
+
+\subsubsection{Просмотр открытых сессий}
+
+Функция "просмотр открытых сессий" (2) в исходном коде реализована функцией get\_sessions. Данная функция находится в модуле src.routers.sessions.views.py. Она принимает HTTP GET запрос по пути "/sessions/" и возвращает список всех открытых сессий текущего пользователя из базы данных (сессий, у которых значение в столбце closed\_at равняется NULL).
+
+\subsubsection{Завершение открытых сессий}
+
+Функция "завершение открытых сессий" (3) в исходном коде реализована функцией close\_sessions. Данная функция находится в модуле src.routers.sessions.views.py. Она принимает HTTP POST запрос по пути "/sessions/close/" и закрывает все открытые сессии текущего пользователя (устанавливает в столбец closed\_at текущее время сервера).
+
+\subsubsection{Изменение списка исходных статей}
+
+Функция "изменение списка исходных статей" (4) в исходном коде реализована функциями upload\_article, update\_article, delete\_article. Данные функции находятся в модуле src.routers.articles.views.py.
+
+Функция upload\_article находится в модуле src.routers.users.views.py. Она принимает HTTP POST запрос по пути "/articles/" и добавляет в базу данных строку с информацией об исходной статье, десериализованной из тела запроса. Значение столбца user\_id берётся из маркера доступа пользователя, передаваемого через Cookie.
+
+Функция update\_article находится в модуле src.routers.users.views.py. Она принимает HTTP PUT запрос по пути "/articles/{article\_id}/", проверяет принадлежность исходной статьи текущему пользователю по идентификатору статьи, полученному из пути запроса, и обновляет запись о статье согласно данным, десериализованным из тела запроса.
+
+Функция delete\_article находится в модуле src.routers.users.views.py. Она принимает HTTP DELETE запрос по пути "/articles/{article\_id}/", проверяет принадлежность исходной статьи текущему пользователю по идентификатору статьи, полученному из пути запроса, и удаляет исходную или переведённую статью по идентификатору.
+
+\subsubsection{Изменение списка переведённых статей}
+
+Функция "изменение списка переведённых статей" (5) в исходном коде реализована функциями delete\_article, рассмотренной выше, и create\_translation.
+
+Функция create\_translation находится в модуле src.routers.translation.views.py. Она принимает HTTP POST запрос по пути "/translation/" и отправляет в Kafka сообщение подписчику-переводчику о запуске перевода. Тело запроса должно содержать идентификатор статьи, массив идентификаторов конечных языков, на которые требуется выполнить перевод, а также идентификаторы стиля и модели перевода.
+
+\subsubsection{Изменение списка жалоб на переводы своих статей}
+
+Функция "изменение списка жалоб на переводы своих статей" (6) в исходном коде реализована функциями create\_report, update\_report, update\_report\_status.
+
+Функция create\_report находится в модуле src.routers.reports.views.py. Она принимает HTTP POST запрос по пути "/articles/{article\_id}/report/", проверяет принадлежность переведённой статьи текущему пользователю по идентификатору статьи, полученному из пути запроса, и добавляет в базу данных строку с информацией о жалобе (текст и идентификатор причины жалобы из тела запроса).
+
+Функция create\_report находится в модуле src.routers.reports.views.py. Она принимает HTTP PUT запрос по пути "/articles/{article\_id}/report/", проверяет принадлежность переведённой статьи текущему пользователю и обновляет информацию о жалобе (текст и причина жалобы в теле запроса).
+
+Функция create\_report находится в модуле src.routers.reports.views.py. Она принимает HTTP PATCH запрос по пути "/articles/{article\_id}/report/status/", проверяет, имеет ли пользователь право устанавливать жалобе новый статус, и обновляет статус жалобы по идентификатору статьи.
+
+\subsubsection{Просмотр своих уведомлений}
+
+Функция "просмотр своих уведомлений" (7) в исходном коде реализована функцией get\_notifications\_list. Данная функция находится в модуле src.routers.notifications.views.py. Она принимает HTTP GET запрос по пути "/notifications/" и возвращает список непрочитанных (имеющих в столбце read\_at значение NULL) уведомлений пользователя из базы данных.
+
+\subsubsection{Изменение списка комментариев к жалобам на переводы своих статей}
+
+Функция "изменение списка комментариев к жалобам на переводы своих статей" (8) включает в себя ровно две функции: "получение списка комментариев к жалобе" (9) и "создание комментария" (10).
+
+Функция "получение списка комментариев к жалобе" (9) в исходном коде реализована функцией get\_comments. Данная функция находится в модуле src.routers.reports.views.py. Она принимает HTTP GET запрос по пути "/articles/{article\_id}/report/comments/", проверяет, имеет ли право текущий пользователь получать список комментариев к этой жалобе по идентификатору статьи, полученному из пути запроса, и возвращает список комментариев к жалобе из базы данных.
+
+Функция "создание комментария" (10) в исходном коде реализована функцией create\_comment. Данная функция находится в модуле src.routers.reports.views.py. Она принимает HTTP POST запрос по пути "/articles/{article\_id}/report/comments/" создаёт комментарий к жалобе по идентификатору статьи, к которой была оставлена жалоба.
+
+\subsubsection{Изменение списка настроек переводчика}
+
+Функция "изменение списка настроек переводчика" (11) в исходном коде реализована функциями create\_config, update\_config и delete\_config.
+
+Функция create\_config находится в модуле src.routers.config.views.py. Она принимает HTTP POST запрос по пути "/configs/", проверяет, занято ли название конфигурации переводчика для данного пользователя, и создаёт новую строку в базе данных с полученным названием, идентификатором модели перевода и стиля перевода, а также массивом идентификаторов конечных языков.
+
+Функция create\_config находится в модуле src.routers.config.views.py. Она принимает HTTP PUT запрос по пути "/configs/{config\_id}/", проверяет принадлежность конфигурации текущему пользователю и занято ли новое название конфигурации переводчика для данного пользователя, и обновляет строку в базе данных согласно десериализованным из тела запроса данным.
+
+Функция create\_config находится в модуле src.routers.config.views.py. Она принимает HTTP DELETE запрос по пути "/configs/{config\_id}/", проверяет принадлежность конфигурации текущему пользователю и удаляет конфигурацию по её идентификатору.
+
+\subsubsection{Регистрация}
+
+Функция "регистрация" (12) в исходном коде реализована функцией register. Данная функция находится в модуле src.routers.auth.views.py. Она принимает HTTP POST запрос по пути "/auth/register/", проверяет, занят ли адрес электронной почты, и создаёт нового пользователя по имени, адресу электронной почты и паролю, полученным из тела запроса. Значение столбца email\_verified устанавливается в false, и пользователь должен дополнительно подтвердить свой адрес электронной почты.
+
+\subsubsection{Аутентификация}
+
+Функция "аутентификация" (13) в исходном коде реализована функцией login. Данная функция находится в модуле src.routers.auth.views.py. Она принимает HTTP POST запрос по пути "/auth/login/", проверяет существование пользователя с полученными из тела запроса адресом электронной почты и паролем и аутентифицирует пользователя: закрывает открытые сессии по IP-адресу и user\_agent, полученными из заголовков запроса, создаёт новую сессию пользователя и возвращает пару маркеров для доступа к ресурсам и обновления маркеров.
+
+\subsubsection{Изменение списка открытых жалоб}
+
+Функция "изменение списка открытых жалоб" (14) в исходном коде реализована функцией update\_report\_status. Данная функция находится в модуле src.routers.reports.views.py и была рассмотрена выше.
+
+\subsubsection{Создание комментариев для жалоб}
+
+Функция "создание комментариев для жалоб" (15) в исходном коде реализована функцией create\_comment. Данная функция находится в модуле src.routers.reports.views.py и была рассмотрена выше.
+
+\subsubsection{Просмотр статистики жалоб}
+
+Функция "просмотр статистики жалоб" (16) в исходном коде реализована функциями get\_models\_stats и get\_prompts\_stats.
+
+Функция get\_models\_stats находится в модуле src.routers.analytics.views.py. Она принимает HTTP GET запрос по пути "/analytics/models-stats/" и возвращает статистику жалоб по всем моделям перевода в базе данных: сколько было подано жалоб на переводы по каждой модели и какие статусы у этих жалоб на данный момент.
+
+Функция get\_prompts\_stats находится в модуле src.routers.analytics.views.py. Она принимает HTTP GET запрос по пути "/analytics/prompts-stats/" и аналогична функции get\_models\_stats, но возвращает статистику по стилям перевода, а не моделям перевода.
+
+\subsubsection{Изменение списка стилей перевода}
+
+Функция "изменение списка стилей перевода" (17) в исходном коде реализована функциями create\_prompt, update\_prompt и delete\_prompt.
+
+Функция create\_prompt находится в модуле src.routers.prompts.views.py. Она принимает HTTP POST запрос по пути "/prompts/", проверяет, занято ли название стиля перевода существующей строкой в базе данных, и добавляет новый стиль перевода в базу данных по названию и тексту, полученным из тела запроса.
+
+Функция update\_prompt находится в модуле src.routers.prompts.views.py. Она принимает HTTP PUT запрос по пути "/prompts/{prompt\_id}/", проверяет, занято ли новое название стиля перевода, и обновляет строку в базе данных по идентификатору стиля перевода, полученному из пути запроса, согласно данным из тела запроса.
+
+Функция delete\_prompt находится в модуле src.routers.prompts.views.py. Она принимает HTTP DELETE запрос по пути "/prompts/{prompt\_id}/", проверяет существование стиля перевода по идентификатору из пути запроса и удаляет стиль по идентификатору.
+
+\subsubsection{Изменение списка моделей перевода}
+
+Функция "изменение списка моделей перевода" (18) в исходном коде реализована функциями create\_model, update\_model и delete\_model.
+
+Функция create\_model находится в модуле src.routers.models.views.py. Она принимает HTTP POST запрос по пути "/models/", проверяет, занято ли название модели перевода, и добавляет в базу данных строку с отображаемым названием, внутренним названием и провайдером, полученным из тела запроса.
+
+Функция update\_model находится в модуле src.routers.models.views.py. Она принимает HTTP PUT запрос по пути "/models/{model\_id}/", проверяет, занято ли новое название модели перевода, и обновляет строку в базе данных по идентификатору модели, полученному из пути запроса, согласно данным, полученным из тела запроса.
+
+Функция delete\_model находится в модуле src.routers.models.views.py. Она принимает HTTP DELETE запрос по пути "/models/{model\_id}/" и удаляет модель перевода из базы данных по её идентификатору, полученному из тела запроса.
+
+\subsubsection{Изменение списка пользователей}
+
+Функция "изменение списка пользователей" (19) в исходном коде реализована функциями create\_user, update\_user и delete\_user.
+
+Функция create\_user находится в модуле src.routers.users.views.py. Она принимает HTTP POST запрос по пути "/users/" и создаёт пользователя с заданным именем, адресом электронной почты, паролем и ролью. Эти данные десериализуются из тела запроса.
+
+Функция update\_user находится в модуле src.routers.users.views.py. Она принимает HTTP PUT запрос по пути "/users/{user\_id}/" и обновляет строку в базы данных по идентификатору пользователя, полученному из пути запроса, согласно данным, полученным из тела запроса.
+
+Функция delete\_user находится в модуле src.routers.users.views.py. Она принимает HTTP DELETE запрос по пути "/users/{user\_id}/" и удаляет пользователя по идентификатору, полученному из пути запроса.
+
+Функции "создание пользователей" (20), "создание модераторов" (21) и "создание администраторов" (22) в исходном коде реализованы функцией src.routers.users.views.create\_user, рассмотренной выше.
+
+Для передачи данных от клиента серверу и обратно используется протокол HTTP и формат JSON. FastAPI автоматически проверяет тело запроса согласно указанной схеме, созданной при помощи Pydantic, что повысило читаемость кода.
+
+\subsection{Реализация базы данных}
+
+Согласно логической схеме базы данных, были созданы объекты базы данных. Модели SQLAlchemy объявлены в модуле src.database.models.py, представленном в Приложении А. Для изменения состояния базы данных использовался инструмент Alembic. Скрипт для создания базы данных и её объектов представлен в Приложении Б.
+
+Для работы с базой данных в SQLAlchemy необходимо создать объект сессии. Предварительная настройка подключения представлена в листинге
+
+\begin{lstlisting}[caption={Настройка подключения к базе данных \label{listing:db_connection}}]
+from sqlalchemy.ext.asyncio import \
+    async_sessionmaker, \
+    create_async_engine
+    
+engine = create_async_engine(Database.url)
+Session = async_sessionmaker(engine)
+\end{lstlisting}
+
+\clearpage
+\section{Технико-экономическое обоснование проекта}
+\subsection{Общая характеристика разрабатываемого программного средства}
+
+Основной целью экономического раздела является экономическое обоснование целесообразности разработки web-приложения, представленного в дипломном проекте. В данном разделе проводится расчет затрат на всех стадиях разработки, а также анализ экономического эффекта в связи с использованием данного веб-приложения.
+
+Разработанное web-приложение позволяет пользователям переводить значительные объёмы текста с одного языка на множество других языков.
+
+Во время разработки дипломного проекта использовалась технология FastAPI для написания серверной части приложения и библиотека Vue.js для написания клиентской части приложения. Данное web-приложение разработано для последующего использования в коммерческих целях.
+
+\subsection{Методика обоснования цены}
+
+В современных рыночных экономических условиях web-приложение выступает преимущественно в виде продукции организаций, представляющей собой функционально завершенные и имеющие товарный вид web-приложения, реализуемые покупателям по рыночным отпускным ценам. Все завершенные разработки web-приложения являются научно-технической продукцией.
+
+Широкое применение вычислительных технологий требует постоянного обновления и совершенствования web-приложения. Выбор эффективных проектов web-приложения связан с их экономической оценкой и расчетом экономического эффекта, который может определяться как у разработчика, так и у пользователя.
+
+У разработчика экономический эффект выступает в виде чистой прибыли от реализации приложения, остающейся в распоряжении организации, а у пользователя – в виде экономии трудовых, финансовых ресурсов, получаемой за счет:
+\begin{itemize}
+    \item[--] снижения трудоемкости расчетов и алгоритмизации программирования и отладки программ;
+    \item[--] снижения расходов на материалы;
+    \item[--] ускорение ввода в эксплуатацию новых систем;
+    \item[--] улучшения показателей основной деятельности в результате использования веб-приложения.
+\end{itemize}
+
+Стоимостная оценка веб-приложения у разработчиков предполагает определение затрат, что включает следующие статьи:
+\begin{itemize}
+    \item заработная плата исполнителей -- основная и дополнительная;
+    \item[--] отчисления в фонд социальной защиты населения;
+    \item[--] отчисления по обязательному страхованию от несчастных случаев на производстве и профессиональных заболеваний;
+    \item[--] расходы на оплату машинного времени;
+    \item[--] накладные расходы;
+    \item[--] прочие прямые затраты.
+\end{itemize}
+
+Для расчёта стоимости разработки web-приложения необходимо установить определённые параметры, представленные в таблице \thesection.1.
+
+\begin{longtable}{|p{10cm}|p{7cm}|}
+    \caption{Параметры, применяемые при расчёте стоимости разработки} \\
+    \hline
+    Параметр & Значение \\ \hline
+    \endfirsthead
+    Норматив ФСЗН+БГС & 0,346 \\ \hline
+    Норматив доп. ЗП & 0,15 \\ \hline
+    Норматив прочих затрат & 0 \\ \hline
+    Норматив накладных расходов & 0,5 \\ \hline
+    Норматив расходов на реализацию & 0,1 \\ \hline
+    Ставка НДС & 20\% \\ \hline
+    Прочие прямые расходы (стоимость подписки использования GPT, аренда сервера для разработки и тестирования) & 149,1 руб. \\ \hline
+    Повышающий коэффициент ЗП & 1 \\ \hline
+\end{longtable}
+
+На основании затрат рассчитывается себестоимость и отпускная цена конечного web-приложения.
+
+\subsubsection{Стоимость разработки}
+
+Стоимость разработки напрямую зависит от заработной платы специалистов и их трудозатрат. Для определения величины основной заработной платы было проведено исследование заработных плат для специалистов в сфере веб-разработки. Источником данных служили открытые веб-порталы, различные форумы и общий средний уровень заработке в сфере информационных технологий. Было установлено, что средняя месячная заработная плата дизайнера составляет 20 рублей в час, бизнес-аналитика -- 20.83 рубля в час, технического лидера -- 100 рублей в час, junior бэкенд/фронтенд разработчика и тестировщика -- 10 рублей в час, middle бэкенд разработчика -- 30 рублей в час, middle фронтенд разработчика -- 28 рублей в час, middle тестировщика -- 24 рубля в час.
+
+Проект разрабатывался командой из бизнес-аналитика, технического лидера, дизайнера, а также junior и middle фронтенд и бекэнд разработчиков и тестировщиков на протяжении двух месяцев. Трудозатраты каждого работника представлены в таблице \thesection.2.
+\begin{longtable}{|p{3cm}|p{5cm}|p{4cm}|p{4cm}|}
+    \caption[]{Трудозатраты и ставки оплаты работников} \\ \hline
+    Базовая ставка в час, руб & Специалист & Трудозатраты, ч & Ставка в час, руб \\ \hline \endfirsthead
+    \multicolumn{4}{l}{Продолжение таблицы \thetable} \\ \hline
+    \endhead
+    20 & Дизайнер & 120 & 20 \\
+    \hline
+    20,83 & Бизнес-аналитик & 24 & 20,83 \\
+    \hline
+    100 & Технический лидер & 16 & 100 \\
+    \hline
+    10 & junior бэкенд разработчик & 140 & 10 \\
+    \hline
+    30 & middle бэкенд разработчик & 140 & 30 \\
+    \hline
+    10 & junior фронтенд разработчик & 124 & 10 \\
+    \hline
+    28 & middle фронтенд разработчик & 124 & 28 \\
+    \hline
+    10 & junior тестировщик & 40 & 10 \\
+    \hline
+    24 & middle тестировщик & 40 & 24 \\
+    \hline
+\end{longtable}
+
+Затраты на заработную плату каждому работнику в зависимости от ставки и трудозатрат определяются по формуле \thesection.1.
+
+\noindent
+\begin{minipage}{1\linewidth}
+\begin{equation}
+  \text{С}_\text{р} = \text{С}⋅\text{Т}⋅((1 + \text{Н}_\text{доп.~ЗП})⋅(1 + \text{Н}_\text{ФСЗН}) + \text{Н}_\text{п} + \text{Н}_\text{н})
+\end{equation}
+\begin{itemize}[nosep, leftmargin=0pt, labelindent=0pt, itemsep=0pt, parsep=0pt]
+  \item[] где $\text{С}_\text{р}$ -- стоимость разработки;
+  \item[] \hspace*{12.5mm}С -- ставка работника в час;
+  \item[] \hspace*{12.5mm}Т -- трудозатраты работника в часах;
+  \item[] \hspace*{12.5mm}$\text{ЗП}_\text{осн}$ -- основная зарплата;
+  \item[] \hspace*{12.5mm}$\text{ЗП}_\text{доп}$ -- дополнительная зарплата;
+  \item[] \hspace*{12.5mm}$\text{Н}_\text{ФСЗН}$ -- норматив отчислений в ФСЗН;
+  \item[] \hspace*{12.5mm}$\text{Н}_\text{доп.~ЗП}$ -- норматив дополнительной зарплаты;
+  \item[] \hspace*{12.5mm}$\text{Н}_\text{п}$ -- норматив прочих затрат;
+  \item[] \hspace*{12.5mm}$\text{Н}_\text{н}$ -- норматив накладных расходов.
+\end{itemize}
+\end{minipage}
+  % \begin{minipage}{0.18\linewidth}
+  %   \hfill (\theequation)
+  % \end{minipage}
+
+Таким образом было определено, что стоимость разработки составляет 33267.57 рублей.
+
+\subsubsection{Цена продажи}
+
+При расчёте цены продажи было решено использовать желаемую маржинальность 20\%. Таким образом, определить цену с НДС можно по формуле \thesection.2.
+
+\noindent
+\begin{minipage}{1\linewidth}
+\begin{equation}
+  \text{Ц}_\text{НДС} = \text{С}_\text{р}(1+\text{Р})(1+\text{С}_\text{НДС})
+\end{equation}
+\begin{itemize}[nosep, leftmargin=0pt, labelindent=0pt, itemsep=0pt, parsep=0pt]
+  \item[] где $\text{Ц}_\text{НДС}$ -- цена продажи, включая НДС;
+  \item[] \hspace*{12.5mm}$\text{С}_\text{НДС}$ -- ставка НДС;
+  \item[] \hspace*{12.5mm}Р -- рентабельность.
+\end{itemize}
+\end{minipage}
+
+
+% \clearpage
+% \section*{Список использованных источников}
+% \makeatletter
+% \renewcommand\@biblabel[1]{#1} % Remove brackets and add a dot after number
+% \renewcommand\cite[1]{\@cite{#1}}
+% \def\@cite#1{\textsuperscript{\bgroup\let\protect\relax\edef\citecounter{\@the\csname @citeb\@extra@b@citeb\endcsname}\mbox{\citecounter}\egroup}} % Use superscript instead if you want numbers above line
+% % If you don't want superscript, use this instead of the line above
+% % \def\@cite#1{\bgroup\let\protect\relax\edef\citecounter{\@the\csname @citeb\@extra@b@citeb\endcsname}\mbox{\citecounter}\egroup}
+
+% This is some text that needs a citation, like in source 
+%  [1]\cite{source1}.  And here's another citation from source [2]\cite{source2}.
+
+% \section*{Bibliography}
+% \begin{thebibliography}{9}
+% \newcommand{\mybibitem}[4]{% #1=label, #2=name, #3=access_url, #4=access_date
+%   \bibitem{#1} #2~\mbox{[Электронный ресурс].} -- \mbox{Режим доступа:} #3. -- \mbox{Дата доступа:} #4.
+% }
+
+
+% \mybibitem{source1}{Национальный правовой Интернет-портал Республики Беларусь}{http://www.pravo.by}{24.06.2016}
+% \mybibitem{source2}{Другое название ресурса, например, статья или книга}{https://www.example.com/resource}{25.07.2024}
+
+% \end{thebibliography}
+
+\end{document}
