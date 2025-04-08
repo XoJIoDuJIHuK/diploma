@@ -13,9 +13,8 @@
 
         <v-card-text>
           <v-form>
-            <v-select label="Конфигурации"
-              :items="configs.map(config => ({ value: config, title: config.name }))" item-title="title" clearable
-              variant="outlined" class="mb-4" @update:model-value="(newValue) => {
+            <v-select label="Конфигурации" :items="configs.map(config => ({ value: config, title: config.name }))"
+              item-title="title" clearable variant="outlined" class="mb-4" @update:model-value="(newValue) => {
                 translationConfigState.model_id = newValue.model_id;
                 translationConfigState.prompt_id = newValue.prompt_id;
                 translationConfigState.language_ids = newValue.language_ids;
@@ -87,17 +86,6 @@
                   'Language not specified' }}
               </v-chip>
 
-              <div v-if="article.original_article_id !== null" class="ml-auto">
-                <v-btn v-if="article.like === null" variant="text" size="small" @click="() => { setLike(true) }">
-                  <v-icon icon="mdi-thumb-up-outline" />
-                </v-btn>
-                <v-btn v-if="article.like === null" variant="text" size="small" @click="() => { setLike(false) }">
-                  <v-icon icon="mdi-thumb-down-outline" />
-                </v-btn>
-                <v-btn v-if="article.like !== null" variant="text" size="small" @click="() => { setLike(null) }">
-                  <v-icon :icon="article.like ? 'mdi-thumb-up' : 'mdi-thumb-down'" />
-                </v-btn>
-              </div>
             </div>
           </div>
         </v-card-title>
@@ -134,8 +122,6 @@ const article = reactive({
   language_id: null,
   created_at: '',
   original_article_id: null,
-  like: null as boolean | null,
-  id: null,
   report_exists: false,
 })
 const translationConfigState = reactive({
@@ -162,16 +148,6 @@ onMounted(async () => {
   }
 })
 
-async function setLike(newValue: boolean | null) {
-  const response = await fetch_data(
-    `${Config.backend_address}/articles/${article.id}/like/`,
-    'PATCH',
-    JSON.stringify({
-      like: newValue
-    })
-  )
-  if (response) article.like = newValue
-}
 
 async function startTranslation() {
   const result = await fetch_data(

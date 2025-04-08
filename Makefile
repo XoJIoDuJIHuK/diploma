@@ -13,5 +13,5 @@ down_local:
 	docker compose --env-file=.local.env -f contrib/docker/docker-compose.local.yml -p diploma down --remove-orphans
 
 pack_tarball:
-	tar -czvf diploma.tar.gz --exclude-from=.tarignore .
+	tar -czvf diploma.tar.gz --exclude-from=.gitigno .
 

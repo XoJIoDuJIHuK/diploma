@@ -10,8 +10,6 @@
     </v-card-title>
     <v-card-text>
       <p>Дата создания: {{ (new Date(article.created_at)).toLocaleString() }}</p>
-      <p v-if="!props.isOriginal">Понравилось: {{ article.like === null ? 'Неизвестно' : article.like ? 'Да' : 'Нет' }}
-      </p>
     </v-card-text>
     <v-card-actions>
       <router-link :to="`/articles/${article.id}/get`">

@@ -135,31 +135,6 @@ async def update_article(
     )
 
 
-@router.patch(
-    '/{article_id}/like/',
-    response_model=DataResponse.single_by_key(
-        'article',
-        ArticleOutScheme,
-    ),
-)
-async def update_like(
-    new_like_data: ArticleUpdateLikeScheme,
-    article_id: uuid.UUID = Path(),
-    user_info: UserInfo = Depends(JWTCookie(roles=[Role.user])),
-    db_session: AsyncSession = Depends(get_session),
-):
-    article = await ArticleRepo.get_by_id(
-        article_id=article_id,
-        db_session=db_session,
-    )
-    if article.user_id != user_info.id or article.original_article_id is None:
-        raise article_not_found_error
-    article.like = new_like_data.like
-    db_session.add(article)
-    await db_session.refresh(article)
-    return DataResponse(
-        data={'article': ArticleOutScheme.model_validate(article)}
-    )
 
 
 @router.delete(
