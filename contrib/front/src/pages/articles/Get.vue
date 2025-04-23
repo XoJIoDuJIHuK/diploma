@@ -83,7 +83,7 @@
                 <v-icon start icon="mdi-translate"></v-icon>
                 {{ store.languages.getValue(article.language_id) ?
                   store.languages.getValue(article.language_id)!.iso_code :
-                  'Language not specified' }}
+                  'Язык не указан' }}
               </v-chip>
 
             </div>

@@ -4,7 +4,7 @@ build_base_local:
 build_local: build_base_local
 	docker compose --env-file=.local.env -f contrib/docker/docker-compose.local.yml build
 
-up_local:
+up:
 	docker compose --env-file=.local.env -f contrib/docker/docker-compose.local.yml -p diploma up -d --build
 
 build_up_local: build_local up_local

@@ -85,6 +85,7 @@ async def get_simple_translation(
         db_session=db_session,
     )
 
+    logger.warning('Prompt: %s', prompt.text)
     if (
         user_info is None
         and used_attempts > simple_translation_config.max_usages_per_hour

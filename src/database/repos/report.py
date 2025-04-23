@@ -5,6 +5,7 @@ from fastapi import (
     status,
 )
 
+from src.sorting import SortingParams, get_sorted_query
 from src.database.helpers import build_where_clause
 from src.database.models import (
     Report,
@@ -40,14 +41,13 @@ class ReportRepo:
     @staticmethod
     async def get_list(
         filter_params: FilterReportsScheme,
+        sorting_params: SortingParams,
         pagination_params: PaginationParams,
         db_session: AsyncSession,
     ) -> tuple[list[ReportListItemScheme], int]:
-        query = (
-            select(Report)
-            .join(Article, Article.id == Report.article_id)
-            .order_by(Report.created_at)
-        )
+        query = select(Report).join(Article, Article.id == Report.article_id)
+        print('Sorting params:', sorting_params)
+        query = get_sorted_query(query, Report, sorting_params)
         user_id = filter_params.user_id
         filter_params.user_id = None
         if user_id is not None:

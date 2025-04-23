@@ -88,6 +88,13 @@ class User(Base):
         DateTime, nullable=True
     )
 
+    articles: Mapped['Article'] = relationship(
+        'Article',
+        back_populates='user',
+        uselist=True,
+        lazy='selectin',
+    )
+
 
 class Session(Base):
     __tablename__ = f'{database_config.prefix}sessions'
@@ -171,10 +178,20 @@ class Article(Base):
         lazy='selectin',
     )
     language: Mapped[Language] = relationship(
-        'Language', uselist=False, lazy='selectin'
+        'Language',
+        uselist=False,
+        lazy='selectin',
     )
     original_article: Mapped['Article'] = relationship(
-        'Article', uselist=False, lazy='selectin'
+        'Article',
+        uselist=False,
+        lazy='selectin',
+    )
+    user: Mapped['User'] = relationship(
+        'User',
+        back_populates='articles',
+        uselist=False,
+        lazy='selectin',
     )
 
 
@@ -231,7 +248,7 @@ class Comment(Base):
     id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), primary_key=True, default=uuid.uuid4
     )
-    text: Mapped[str] = mapped_column(String(100))
+    text: Mapped[str] = mapped_column(String(1000))
     sender_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey(f'{User.__tablename__}.id', ondelete='CASCADE')
     )

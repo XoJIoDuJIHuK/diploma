@@ -11,6 +11,7 @@ from fastapi import (
 )
 from starlette.websockets import WebSocketDisconnect
 
+from src.sorting import SortingParams
 from src.routers.notifications.schemes import NotificationCreateScheme
 from src.database.repos.translation_task import TaskRepo
 from src.depends import get_session, validate_token_for_ws
@@ -34,7 +35,6 @@ from src.routers.reports.schemes import (
     ReportReasonOutScheme,
     FilterReportsScheme,
     ReportListItemScheme,
-    ReportOutModScheme,
 )
 from src.database.repos.article import ArticleRepo
 from src.database.repos.report import ReportRepo
@@ -70,22 +70,22 @@ async def get_report_reasons(db_session: AsyncSession = Depends(get_session)):
 
 @router.get('/reports/', response_model=ListResponse[ReportListItemScheme])
 async def get_reports(
-    report_status: ReportStatus | None = None,
-    user_id: uuid.UUID | None = None,
-    article_id: uuid.UUID | None = None,
+    filter_params: FilterReportsScheme = Depends(),
+    sorting_params: SortingParams = Depends(),
     user_info: UserInfo = Depends(JWTCookie(roles=[Role.moderator])),
     pagination_params: PaginationParams = Depends(get_pagination_params),
     db_session: AsyncSession = Depends(get_session),
 ):
     reports, count = await ReportRepo.get_list(
-        filter_params=FilterReportsScheme(
-            status=report_status, user_id=user_id, article_id=article_id
-        ),
+        filter_params=filter_params,
+        sorting_params=sorting_params,
         pagination_params=pagination_params,
         db_session=db_session,
     )
     return ListResponse[ReportListItemScheme].from_list(
-        items=reports, total_count=count, params=pagination_params
+        items=reports,
+        total_count=count,
+        params=pagination_params,
     )
 
 
@@ -100,8 +100,6 @@ async def get_article_report(
     if not report:
         raise report_not_found_error
     await db_session.refresh(report)
-    if user_info.role == Role.user:
-        return DataResponse(data={'report': ReportOutScheme.create(report)})
 
     translated_article = await ArticleRepo.get_by_id(
         article_id=report.article_id,
@@ -116,14 +114,20 @@ async def get_article_report(
         article_id=translated_article.original_article_id,
         db_session=db_session,
     )
+    uploader = await UserRepo.get_by_id(
+        user_id=source_article.user_id,
+        db_session=db_session,
+    )
     return DataResponse(
         data={
-            'report': ReportOutModScheme.create(
+            'report': ReportOutScheme.create(
                 report,
                 source_text=source_article.text,
+                source_title=source_article.title,
                 source_language_id=source_article.language_id,
                 translated_text=translated_article.text,
                 translated_language_id=translated_article.language_id,
+                user_name=uploader.name,
             )
         }
     )

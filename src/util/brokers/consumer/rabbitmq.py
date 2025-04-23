@@ -53,7 +53,7 @@ class TranslationData:
 
 class AbstractAsyncConsumer(ABC):
     async def run(self, queue_name: str):
-        logger.info('Starting consumer for queue %s', queue_name)
+        logger.info('Starting consumer for queue <%s>', queue_name)
         connection = await connect(
             f'amqp://{rabbitmq_config.login}:{rabbitmq_config.password}@{rabbitmq_config.host}/'
         )
@@ -64,7 +64,6 @@ class AbstractAsyncConsumer(ABC):
             queue = await channel.declare_queue(queue_name)
             await queue.consume(self._on_message)
 
-            print(f'Waiting for messages from queue {queue_name}')
             await asyncio.Future()
         logger.info('Lmao consumer ended working')
 

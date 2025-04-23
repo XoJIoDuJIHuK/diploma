@@ -1,5 +1,3 @@
-import json
-from os import stat
 import time
 
 from fastapi import (

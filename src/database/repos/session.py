@@ -64,16 +64,18 @@ class SessionRepo:
         db_session: AsyncSession,
         ip: str | None = None,
         user_agent: str | None = None,
-    ):
-        result = await db_session.execute(
+    ) -> int:
+        query = (
             update(Session)
-            .where(
-                Session.user_id == user_id,
-                ip is None or Session.ip == ip,
-                user_agent is None or Session.user_agent == user_agent,
-            )
+            .where(Session.user_id == user_id)
             .values(is_closed=True, closed_at=get_utc_now())
         )
+        if ip is not None:
+            query = query.filter_by(ip=ip)
+        if user_agent is not None:
+            query = query.filter_by(user_agent=user_agent)
+
+        result = await db_session.execute(query)
         await db_session.flush()
 
         return result.rowcount

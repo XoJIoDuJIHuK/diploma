@@ -1,60 +1,117 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>{{ report.reason_text }}</v-col>
-      <v-col>{{ (new Date(report.created_at)).toLocaleString() }}</v-col>
-      <v-col>{{ report.status }}</v-col>
-    </v-row>
-    <v-row>
-      {{ report.text }}
-    </v-row>
-    <v-row v-if="userRole == Config.userRoles.mod">
-      <v-col>
-        <div v-html="renderedSourceMarkdown" class="markdown-renderer"></div>
-      </v-col>
-      <v-col>
-        <div v-html="renderedTranslatedMarkdown" class="markdown-renderer"></div>
-      </v-col>
-    </v-row>
-    <v-row v-if="userRole == Config.userRoles.mod && report.status === Config.reportStatuses.open">
-      <v-col><v-btn color="success" @click="updateStatus(Config.reportStatuses.satisfied)">Удовлетворить</v-btn></v-col>
-      <v-col><v-btn color="error" @click="updateStatus(Config.reportStatuses.rejected)">Отклонить</v-btn></v-col>
-    </v-row>
-    <v-row v-else-if="report.status === Config.reportStatuses.open">
-      <v-col><v-btn color="error" @click="updateStatus(Config.reportStatuses.closedByUser)">Закрыть</v-btn></v-col>
-    </v-row>
-    <v-row>
-      <v-container>
-        <v-row v-if="comments.length === 0" justify="center" class="text--disabled">Комментариев нет</v-row>
-        <v-row v-for="comment in comments" :key="comment.id"
-          :class="['comment', { mine: currentUserId === comment.sender_id, others: currentUserId !== comment.sender_id }]">
-          <v-col cols="auto" class="pr-4">
-            {{ comment.sender_name }}
-          </v-col>
-          <v-col>
-            <v-container>
-              <v-row>
-                {{ comment.text }}
-              </v-row>
-              <v-row class="text--secondary">
-                {{ (new Date(comment.created_at)).toLocaleString() }}
-              </v-row>
-            </v-container>
-          </v-col>
-        </v-row>
-        <v-row v-if="report.status === Config.reportStatuses.open">
-          <v-col cols="8">
-            <v-text-field v-model="commentText" label="Комментарий" />
-          </v-col>
-          <v-col cols="4">
-            <v-btn variant="elevated" color="info" @click="sendComment">
-              <v-icon icon="mdi-send" />
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-container>
-    </v-row>
-  </v-container>
+  <v-card class="mx-auto my-4" max-width="900">
+    <v-card-title>
+      <div>
+        <span class="headline">Жалоба пользователя {{ report.user_name }}</span>
+      </div>
+      <v-spacer />
+      <v-chip small text-color="white" :color="report.status === Config.reportStatuses.open
+        ? 'warning'
+        : report.status === Config.reportStatuses.satisfied
+          ? 'success'
+          : report.status === Config.reportStatuses.rejected
+            ? 'error'
+            : 'grey'
+        ">
+        {{ report.status }}
+      </v-chip>
+    </v-card-title>
+
+    <v-card-subtitle class="grey--text">
+      <v-icon small class="mr-1">mdi-calendar</v-icon>
+      {{ (new Date(report.created_at)).toLocaleString() }}
+    </v-card-subtitle>
+
+    <v-divider />
+
+    <v-card-text>
+      <v-row>
+        <v-col cols="12" md="4">
+          <strong>Причина</strong>
+          <p class="mt-1">{{ report.reason_text }}</p>
+        </v-col>
+        <v-col cols="12" md="8">
+          <strong>Текст жалобы</strong>
+          <p class="mt-1">{{ report.text }}</p>
+        </v-col>
+      </v-row>
+
+      <v-row dense>
+        <v-col cols="12" md="6">
+          <strong>Исходный текст</strong><br>
+          <strong>{{ report.source_title }}</strong>
+          <v-sheet class="pa-3 markdown-box" elevation="1">
+            <div v-html="renderedSourceMarkdown"></div>
+          </v-sheet>
+        </v-col>
+        <v-col cols="12" md="6">
+          <strong>Перевод</strong><br>
+          <strong>{{ report.article_title }}</strong>
+          <v-sheet class="pa-3 markdown-box" elevation="1">
+            <div v-html="renderedTranslatedMarkdown"></div>
+          </v-sheet>
+        </v-col>
+      </v-row>
+    </v-card-text>
+
+    <v-card-actions>
+      <template v-if="userRole === Config.userRoles.mod && report.status === Config.reportStatuses.open">
+        <v-btn color="success" @click="updateStatus(Config.reportStatuses.satisfied)" small>
+          <v-icon left>mdi-check</v-icon> Удовлетворить
+        </v-btn>
+        <v-btn color="error" @click="updateStatus(Config.reportStatuses.rejected)" small>
+          <v-icon left>mdi-close</v-icon> Отклонить
+        </v-btn>
+      </template>
+      <template v-else-if="report.status === Config.reportStatuses.open">
+        <v-btn color="warning" @click="updateStatus(Config.reportStatuses.closedByUser)" small>
+          <v-icon left>mdi-lock</v-icon> Закрыть
+        </v-btn>
+      </template>
+      <v-spacer />
+    </v-card-actions>
+
+    <v-divider />
+
+    <v-card-text>
+      <div class="section-title">Комментарии</div>
+      <v-list two-line dense>
+        <v-list-item v-for="comment in comments" :key="comment.id" :class="{
+          'my-comment': currentUserId === comment.sender_id,
+          'other-comment': currentUserId !== comment.sender_id
+        }">
+          <v-list-item-avatar>
+            <v-icon color="grey lighten-1">mdi-account</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title>{{ comment.sender_name }}</v-list-item-title>
+            <v-list-item-subtitle>{{ comment.text }}</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-action-text class="grey--text text-caption">
+            {{ (new Date(comment.created_at)).toLocaleString() }}
+          </v-list-item-action-text>
+        </v-list-item>
+
+        <v-list-item v-if="comments.length === 0">
+          <v-list-item-content class="text-center grey--text">
+            Пусто.
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+    <v-row v-if="report.status === Config.reportStatuses.open" align="center" class="mt-4">
+        <v-col cols="9">
+          <v-textarea v-model="commentText" label="Введите текст" outlined dense :rows="1" :auto-grow="true"
+            :max-height="4 * lineHeight" />
+        </v-col>
+        <v-col cols="3" class="text-right">
+          <v-btn color="info" @click="sendComment" rounded small>
+            <v-icon left>mdi-send</v-icon> Отправить
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script setup lang="ts">
@@ -139,49 +196,21 @@ async function updateStatus(newStatus: string) {
 </script>
 
 <style scoped>
-.comment {
-  margin-bottom: 8px;
-  padding: 4px;
-  border-radius: 8px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+.section-title {
+  font-weight: 500;
+  margin-bottom: 16px;
 }
 
-.comment.mine {
-  background-color: rgb(182, 182, 255);
-  border-left: 4px solid rgb(100, 100, 255);
+.markdown-box {
+  background-color: #fafafa;
+  border-radius: 4px;
 }
 
-.comment.others {
-  background-color: rgb(164, 229, 164);
-  border-right: 4px solid rgb(100, 255, 100);
+.my-comment {
+  background-color: rgba(100, 181, 246, 0.1) !important;
 }
 
-.comment .v-col {
-  padding: 0;
-}
-
-.comment .v-col:first-child {
-  font-weight: bold;
-}
-
-.comment .v-container {
-  padding: 5px;
-}
-
-.comment .v-row {
-  margin-bottom: 4px;
-}
-
-.comment .v-row:last-child {
-  margin-bottom: 0;
-}
-
-.comment .v-text-field {
-  padding: 0;
-  margin-bottom: 4px;
-}
-
-.comment .v-btn {
-  margin-left: 8px;
+.other-comment {
+  background-color: rgba(139, 195, 74, 0.1) !important;
 }
 </style>
