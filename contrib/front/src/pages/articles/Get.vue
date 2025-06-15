@@ -62,12 +62,16 @@
                     <v-icon start icon="mdi-earth"></v-icon>
                     Перевести
                   </v-btn>
+                  <v-btn variant="outlined" color="indigo" size="small" @click="downloadArticle" class="ml-2">
+                    <v-icon start icon="mdi-download"></v-icon>
+                    Скачать
+                  </v-btn>
                 </template>
                 <router-link v-if="article.original_article_id"
                   :to="`/articles/${article.id}/report/${article.report_exists ? '' : 'create'}`">
                   <v-btn variant="outlined" color="error" size="small" class="ml-2">
                     <v-icon start icon="mdi-bug"></v-icon>
-                    Report
+                    Жалоба
                   </v-btn>
                 </router-link>
               </div>
@@ -117,6 +121,7 @@ const router = useRouter();
 const renderedMarkdown = ref('');
 
 const article = reactive({
+  id: undefined,
   title: 'Не загружен',
   text: 'Не загружен',
   language_id: null,
@@ -133,8 +138,8 @@ const translationConfigState = reactive({
 const configs: Ref<Array<Config>> = ref([])
 
 onMounted(async () => {
-  const article_id = String(route.params.article_id)
-  let response = await get_article(article_id)
+  article.id = String(route.params.article_id)
+  let response = await get_article(article.id)
   if (!response) {
     await router.push('/error')
   }
@@ -169,6 +174,10 @@ async function startTranslation() {
     })
     translationConfigState.isVisible = false;
   }
+}
+async function downloadArticle() {
+  const downloadUrl = `${Config.backend_address}/articles/${article.id}/download/`;
+  window.open(downloadUrl, "_blank");
 }
 </script>
 

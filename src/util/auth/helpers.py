@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.models import User, ConfirmationType
 from src.database.repos.confirmation_code import ConfirmationCodeRepo
-from src.logger import get_logger
+import logging
 from src.settings import (
     app_config,
     jwt_config,
@@ -28,7 +28,7 @@ from src.util.brokers.producer.rabbitmq import publish_message
 from urllib.parse import urljoin, urlencode
 
 pwd_context = CryptContext(schemes=['bcrypt'], deprecated='auto')
-logger = get_logger(LOGGER_PREFIX + __name__)
+logger = logging.getLogger('app')
 
 
 def get_password_hash(password: str) -> str:

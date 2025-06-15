@@ -73,7 +73,7 @@ class ReportOutScheme(ReportListItemScheme):
         ]
         if len(set(required_kwargs).difference(set(kwargs))) != 0:
             raise Exception(
-                f'ReportOutModScheme.create expected {required_kwargs}'
+                f'ReportOutScheme.create expected {required_kwargs}'
                 f', got {kwargs.keys()}'
             )
         articles_info = {}

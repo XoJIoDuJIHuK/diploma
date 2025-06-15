@@ -97,7 +97,7 @@
             <v-btn :key="icon.value" class="mx-4 white--text" icon>
               <v-icon size="30px" style="margin-top: 8px">{{
                 icon.value
-                }}</v-icon>
+              }}</v-icon>
             </v-btn>
           </a>
         </v-row>
@@ -143,6 +143,11 @@
                 <v-btn :disabled="!loginData.form" :loading="loginData.isLoading" color="primary" size="large"
                   type="submit" variant="flat" block class="mb-2">
                   {{ loginData.isLogin ? "Войти" : "Зарегистрироваться" }}
+                </v-btn>
+
+                <v-btn :loading="loginData.isLoading" color="primary" size="large" type="button"
+                  @click="redirectToGoogle" variant="flat" block class="mb-2">
+                  Войти через Google
                 </v-btn>
 
                 <v-btn v-if="loginData.isLogin" @click="onForgotPassword" color="secondary" size="large"
@@ -290,6 +295,9 @@ async function onConfirmEmail() {
     });
     loginData.isVisible = false;
   }
+}
+function redirectToGoogle() {
+  location.href = `${Config.backend_address}/oauth/login/?provider=google`
 }
 onMounted(async () => {
   if (await fetchPersonalInfo(false)) {

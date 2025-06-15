@@ -1,44 +1,64 @@
-\contentsline {section}{\numberline {1},}{1}{section.1}%
-\contentsline {section}{\numberline {2},}{1}{section.2}%
 \babel@toc {russian}{}\relax 
-\contentsline {section}{Введение}{6}{section*.4}%
-\contentsline {section}{\numberline {3}Обзор литературных источников}{7}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Документация Python}{7}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Документация FastAPI}{7}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Документация Pydantic}{7}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}Документация PostgreSQL}{8}{subsection.3.4}%
-\contentsline {section}{\numberline {4}Постановка задачи и обзор аналогичных решений}{9}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Постановка задачи}{9}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Обзор аналогичных решений}{9}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Выводы}{11}{subsection.4.3}%
-\contentsline {section}{\numberline {5}Проектирование web-приложения}{12}{section.5}%
-\contentsline {subsection}{\numberline {5.1}Функциональность web-приложения}{12}{subsection.5.1}%
-\contentsline {subsection}{\numberline {5.2}Структура базы данных}{15}{subsection.5.2}%
-\contentsline {subsection}{\numberline {5.3}Архитектура web-приложения}{26}{subsection.5.3}%
-\contentsline {subsection}{\numberline {5.4}Выводы}{28}{subsection.5.4}%
-\contentsline {section}{\numberline {6}Реализация web-приложения}{30}{section.6}%
-\contentsline {subsection}{\numberline {6.1}Обоснование выбора программной платформы}{30}{subsection.6.1}%
-\contentsline {subsection}{\numberline {6.2}Реализация серверной части web-приложения}{30}{subsection.6.2}%
-\contentsline {subsubsection}{\numberline {6.2.1}Изменение учётной записи}{30}{subsubsection.6.2.1}%
-\contentsline {subsubsection}{\numberline {6.2.2}Просмотр открытых сессий}{31}{subsubsection.6.2.2}%
-\contentsline {subsubsection}{\numberline {6.2.3}Завершение открытых сессий}{31}{subsubsection.6.2.3}%
-\contentsline {subsubsection}{\numberline {6.2.4}Изменение списка исходных статей}{31}{subsubsection.6.2.4}%
-\contentsline {subsubsection}{\numberline {6.2.5}Изменение списка переведённых статей}{32}{subsubsection.6.2.5}%
-\contentsline {subsubsection}{\numberline {6.2.6}Изменение списка жалоб на переводы своих статей}{32}{subsubsection.6.2.6}%
-\contentsline {subsubsection}{\numberline {6.2.7}Просмотр своих уведомлений}{32}{subsubsection.6.2.7}%
-\contentsline {subsubsection}{\numberline {6.2.8}Изменение списка комментариев к жалобам на переводы своих статей}{33}{subsubsection.6.2.8}%
-\contentsline {subsubsection}{\numberline {6.2.9}Изменение списка настроек переводчика}{33}{subsubsection.6.2.9}%
-\contentsline {subsubsection}{\numberline {6.2.10}Регистрация}{33}{subsubsection.6.2.10}%
-\contentsline {subsubsection}{\numberline {6.2.11}Аутентификация}{34}{subsubsection.6.2.11}%
-\contentsline {subsubsection}{\numberline {6.2.12}Изменение списка открытых жалоб}{34}{subsubsection.6.2.12}%
-\contentsline {subsubsection}{\numberline {6.2.13}Создание комментариев для жалоб}{34}{subsubsection.6.2.13}%
-\contentsline {subsubsection}{\numberline {6.2.14}Просмотр статистики жалоб}{34}{subsubsection.6.2.14}%
-\contentsline {subsubsection}{\numberline {6.2.15}Изменение списка стилей перевода}{34}{subsubsection.6.2.15}%
-\contentsline {subsubsection}{\numberline {6.2.16}Изменение списка моделей перевода}{35}{subsubsection.6.2.16}%
-\contentsline {subsubsection}{\numberline {6.2.17}Изменение списка пользователей}{35}{subsubsection.6.2.17}%
-\contentsline {subsection}{\numberline {6.3}Реализация базы данных}{36}{subsection.6.3}%
-\contentsline {section}{\numberline {7}Технико-экономическое обоснование проекта}{37}{section.7}%
-\contentsline {subsection}{\numberline {7.1}Общая характеристика разрабатываемого программного средства}{37}{subsection.7.1}%
-\contentsline {subsection}{\numberline {7.2}Методика обоснования цены}{37}{subsection.7.2}%
-\contentsline {subsubsection}{\numberline {7.2.1}Стоимость разработки}{38}{subsubsection.7.2.1}%
-\contentsline {subsubsection}{\numberline {7.2.2}Цена продажи}{40}{subsubsection.7.2.2}%
+\babel@toc {english}{}\relax 
+\contentsline {section}{Введение}{5}{Doc-Start}%
+\contentsline {section}{\numberline {1}Обзор литературных источников}{6}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Документация Python}{6}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Документация FastAPI}{6}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Документация Pydantic}{6}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Документация PostgreSQL}{7}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Постановка задачи и обзор аналогичных решений}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Постановка задачи}{8}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Обзор аналогичных решений}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Выводы}{10}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Проектирование веб-приложения}{11}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Функциональность веб-приложения}{11}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Структура базы данных}{14}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Архитектура веб-приложения}{25}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Выводы}{27}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Реализация веб-приложения}{29}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Обоснование выбора программной платформы}{29}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Реализация серверной части веб-приложения}{29}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Изменение учётной записи}{30}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Просмотр открытых сессий}{30}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Завершение открытых сессий}{30}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Изменение списка исходных статей}{30}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Изменение списка переведённых статей}{31}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}Изменение списка жалоб на переводы своих статей}{31}{subsection.4.8}%
+\contentsline {subsection}{\numberline {4.9}Просмотр своих уведомлений}{32}{subsection.4.9}%
+\contentsline {subsection}{\numberline {4.10}Изменение списка комментариев к жалобам на переводы своих статей}{32}{subsection.4.10}%
+\contentsline {subsection}{\numberline {4.11}Изменение списка настроек переводчика}{32}{subsection.4.11}%
+\contentsline {subsection}{\numberline {4.12}Регистрация}{33}{subsection.4.12}%
+\contentsline {subsection}{\numberline {4.13}Аутентификация}{33}{subsection.4.13}%
+\contentsline {subsection}{\numberline {4.14}Изменение списка открытых жалоб}{33}{subsection.4.14}%
+\contentsline {subsection}{\numberline {4.15}Создание комментариев для жалоб}{33}{subsection.4.15}%
+\contentsline {subsection}{\numberline {4.16}Просмотр статистики жалоб}{33}{subsection.4.16}%
+\contentsline {subsection}{\numberline {4.17}Изменение списка стилей перевода}{34}{subsection.4.17}%
+\contentsline {subsection}{\numberline {4.18}Изменение списка моделей перевода}{34}{subsection.4.18}%
+\contentsline {subsection}{\numberline {4.19}Изменение списка пользователей}{35}{subsection.4.19}%
+\contentsline {subsection}{\numberline {4.20}Реализация базы данных}{35}{subsection.4.20}%
+\contentsline {subsection}{\numberline {4.21}Реализация клиентской части веб-приложения}{36}{subsection.4.21}%
+\contentsline {subsection}{\numberline {4.22}Выводы}{37}{subsection.4.22}%
+\contentsline {section}{\numberline {5}Тестирование веб-приложения}{38}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Функциональное тестирование}{38}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Нагрузочное тестирование}{43}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Выводы}{44}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Руководство программиста}{45}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Настройка окружения}{45}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Развёртывание приложения}{46}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Проверка работоспособности приложения}{47}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Выводы}{47}{subsection.6.4}%
+\contentsline {section}{\numberline {7}Технико-экономическое обоснование проекта}{48}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Общая характеристика разрабатываемого программного средства}{48}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Иходные данные для проведения расчётов}{48}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Обоснование цены программного средства}{50}{subsection.7.3}%
+\contentsline {subsubsection}{\numberline {7.3.1}Расчёт затрат рабочего времени на разработку программного средства}{50}{subsubsection.7.3.1}%
+\contentsline {subsubsection}{\numberline {7.3.2}Расчёт основной заработной платы}{51}{subsubsection.7.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.3}Расчёт дополнительной заработной платы}{52}{subsubsection.7.3.3}%
+\contentsline {subsubsection}{\numberline {7.3.4}Расчёт отчислений в Фонд социальной защиты населения и по обязательному страхованию}{52}{subsubsection.7.3.4}%
+\contentsline {subsubsection}{\numberline {7.3.5}Расчёт суммы прочих прямых затрат}{53}{subsubsection.7.3.5}%
+\contentsline {subsubsection}{\numberline {7.3.6}Расчёт суммы накладных расходов}{53}{subsubsection.7.3.6}%
+\contentsline {subsubsection}{\numberline {7.3.7}Сумма расходов на разработку программного средства и расчёт полной себестоимости}{54}{subsubsection.7.3.7}%
+\contentsline {subsubsection}{\numberline {7.3.8}Определение цены}{54}{subsubsection.7.3.8}%
+\contentsline {subsection}{\numberline {7.4}Выводы}{55}{subsection.7.4}%
+\contentsline {section}{Заключение}{57}{table.7.5}%
+\contentsline {section}{Список использованных источников}{58}{table.7.5}%

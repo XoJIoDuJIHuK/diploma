@@ -22,7 +22,7 @@ from src.database.models import (
     ReportStatus,
 )
 from src.http_responses import get_responses
-from src.logger import get_logger
+import logging
 from src.pagination import PaginationParams, get_pagination_params
 from src.responses import ListResponse, DataResponse, SimpleListResponse
 from src.routers.reports.helpers import get_report
@@ -48,7 +48,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from src.util.storage.classes import RedisHandler
 from src.util.notifications.helpers import send_notification
 
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 router = APIRouter(prefix='', tags=['Reports'])
 report_not_found_error = HTTPException(
     status_code=status.HTTP_404_NOT_FOUND, detail='Жалоба не найдена'
@@ -153,12 +153,32 @@ async def create_report(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Жаловаться можно только на переводы',
         )
+    source_article = await ArticleRepo.get_by_id(
+        article_id=article.original_article_id,
+        db_session=db_session,
+    )
+    user = await UserRepo.get_by_id(
+        user_id=user_info.id,
+        db_session=db_session,
+    )
     report = await ReportRepo.create(
         article_id=article_id,
         report_data=report_data,
         db_session=db_session,
     )
-    return DataResponse(data={'report': ReportOutScheme.create(report)})
+    return DataResponse(
+        data={
+            'report': ReportOutScheme.create(
+                report,
+                source_text=source_article.text,
+                source_title=source_article.title,
+                source_language_id=source_article.language_id,
+                translated_text=article.text,
+                translated_language_id=article.language_id,
+                user_name=user.name,
+            )
+        }
+    )
 
 
 @router.put(
@@ -177,7 +197,28 @@ async def update_report(
     report = await ReportRepo.update(
         report=report, report_data=report_data, db_session=db_session
     )
-    return DataResponse(data={'report': ReportOutScheme.create(report)})
+    user = await UserRepo.get_by_id(
+        user_id=user_info.id,
+        db_session=db_session,
+    )
+    assert report.article.original_article_id is not None
+    source_article = await ArticleRepo.get_by_id(
+        article_id=report.article.original_article_id,
+        db_session=db_session,
+    )
+    return DataResponse(
+        data={
+            'report': ReportOutScheme.create(
+                report,
+                source_text=source_article.text,
+                source_title=source_article.title,
+                source_language_id=source_article.language_id,
+                translated_text=report.article.text,
+                translated_language_id=report.article.language_id,
+                user_name=user.name,
+            )
+        }
+    )
 
 
 @router.patch(
@@ -210,6 +251,9 @@ async def update_report_status(
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail='Действие запрещено'
         )
+    user = await UserRepo.get_by_id(
+        user_id=user_info.id, db_session=db_session
+    )
     if new_status == ReportStatus.satisfied:
         translation_task = await TaskRepo.get_by_article_id(
             article_id=article_id,
@@ -222,16 +266,12 @@ async def update_report_status(
             )
         logger.info('Translation task cost is %d', translation_task.cost)
         await db_session.refresh(report)
-        # await db_session.refresh(report.article)
         await UserRepo.update_balance(
             user_id=report.article.user_id,
             delta=translation_task.cost,
             reason=BalanceChangeCause.refund,
             db_session=db_session,
         )
-        # await db_session.refresh(report)
-        # await db_session.refresh(report.article)
-        # await db_session.refresh(translation_task)
         await send_notification(
             notification_scheme=NotificationCreateScheme(
                 title='Вам одобрен возврат',
@@ -245,6 +285,10 @@ async def update_report_status(
             ),
             db_session=db_session,
         )
+    assert report.article.original_article_id is not None
+    source_article = await ArticleRepo.get_by_id(
+        article_id=report.article.original_article_id, db_session=db_session
+    )
     return DataResponse(
         data={
             'report': ReportOutScheme.create(
@@ -253,7 +297,13 @@ async def update_report_status(
                     new_status=new_status,
                     user_id=user_info.id,
                     db_session=db_session,
-                )
+                ),
+                source_text=source_article.text,
+                source_title=source_article.title,
+                source_language_id=source_article.language_id,
+                translated_text=report.article.text,
+                translated_language_id=report.article.language_id,
+                user_name=user.name,
             )
         }
     )

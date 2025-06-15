@@ -6,12 +6,11 @@ import click
 
 from src.database import get_session
 from src.database.models import AIModel
-from src.logger import get_logger
-from src.settings import LOGGER_PREFIX
+import logging
 
 from sqlalchemy.future import select
 
-logger = get_logger(LOGGER_PREFIX + __name__)
+logger = logging.getLogger('app')
 
 
 @click.command()

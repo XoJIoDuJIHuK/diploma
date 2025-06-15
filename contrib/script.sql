@@ -124,7 +124,6 @@ create table public.gptranslate_articles
     original_article_id uuid
         references public.gptranslate_articles
             on delete cascade,
-    "like"              boolean,
     created_at          timestamp   not null,
     deleted_at          timestamp
 );

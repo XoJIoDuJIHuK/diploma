@@ -1,5 +1,3 @@
-import http
-
 from fastapi import HTTPException, status
 
 from src.settings import providers, OAuthProvider
@@ -10,22 +8,20 @@ from src.util.storage.abstract import AbstractStorage
 
 
 def get_oauth_provider(
-        provider: OAuthProvider,
-        storage: AbstractStorage = None,
+    provider: OAuthProvider,
+    storage: AbstractStorage | None = None,
 ) -> BaseOauth2Authorize:
     """
     Returns suitable oauth provider class by provider name
     """
-    config_class = providers.get(provider.value)
+    config = providers.get(provider.value)
     provider_not_registered_error = HTTPException(
-        status_code=http.HTTPStatus.NOT_FOUND,
-        detail='Провайдер не зарегистрирован'
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail='Провайдер не зарегистрирован',
     )
 
-    if not config_class:
+    if config is None:
         raise provider_not_registered_error
-
-    config = config_class()
 
     oauth_class = oauth_provider_classes.get(provider.value)
 
@@ -36,8 +32,4 @@ def get_oauth_provider(
         client_secret=config.CLIENT_SECRET,
     )
 
-    return oauth_class(
-        config=config,
-        credentials=credentials,
-        storage=storage
-    )
+    return oauth_class(config=config, credentials=credentials, storage=storage)

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto my-4" max-width="900">
+  <v-card class="mx-auto mx-4" max-width="900">
     <v-card-title>
       <div>
         <span class="headline">Жалоба пользователя {{ report.user_name }}</span>
@@ -99,7 +99,7 @@
         </v-list-item>
       </v-list>
 
-    <v-row v-if="report.status === Config.reportStatuses.open" align="center" class="mt-4">
+      <v-row v-if="report.status === Config.reportStatuses.open" align="center" class="mt-4">
         <v-col cols="9">
           <v-textarea v-model="commentText" label="Введите текст" outlined dense :rows="1" :auto-grow="true"
             :max-height="4 * lineHeight" />
@@ -185,7 +185,7 @@ async function updateStatus(newStatus: string) {
   )
   if (response) {
     UnnecessaryEventEmitter.emit(Config.alertMessageKey, {
-      title: 'Жалоба создана',
+      title: 'Статус обновлён',
       text: undefined,
       severity: 'info'
     });

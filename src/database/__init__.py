@@ -5,7 +5,7 @@ from typing import AsyncGenerator
 from fastapi import HTTPException
 
 from src.settings import database_config, LOGGER_PREFIX
-from src.logger import get_logger
+import logging
 
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
@@ -21,7 +21,7 @@ async_engine = create_async_engine(
 AsyncDBSession = async_sessionmaker(async_engine)
 
 
-logger = get_logger(LOGGER_PREFIX + __name__)
+logger = logging.getLogger('app')
 semaphore = asyncio.Semaphore(5)
 
 
@@ -43,7 +43,7 @@ async def get_session() -> AsyncGenerator[AsyncSession, None]:
                 await session.rollback()
                 raise e
             else:
-                logger.info('Committing session')
+                logger.debug('Committing session')
                 await session.commit()
             finally:
                 await session.close()

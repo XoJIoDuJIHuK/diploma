@@ -15,7 +15,7 @@ from src.database.models import BalanceChangeCause
 from src.settings import front_config, stripe_config
 from src.database.repos.user import UserRepo
 from src.depends import get_session
-from src.logger import get_logger
+import logging
 from src.util.auth.classes import JWTCookie
 from src.util.auth.schemes import UserInfo
 from src.responses import SimpleListResponse
@@ -30,7 +30,7 @@ from src.util.storage.classes import RedisHandler
 
 router = APIRouter(prefix='/payment', tags=['Stripe'])
 stripe.api_key = stripe_config.secret_key
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 @router.get('/products/')

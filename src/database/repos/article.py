@@ -101,7 +101,6 @@ class ArticleRepo:
             user_id=article_data.user_id,
             language_id=article_data.language_id,
             original_article_id=article_data.original_article_id,
-            like=article_data.like,
         )
         db_session.add(article)
         await db_session.flush()

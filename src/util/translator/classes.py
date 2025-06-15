@@ -7,9 +7,7 @@ import httpx
 from src.database.models import (
     AIModel,
 )
-from src.logger import get_logger
 from src.settings import (
-    LOGGER_PREFIX,
     openrouter_config,
     g4f_config,
 )
@@ -20,7 +18,7 @@ from src.util.translator.exceptions import TranslatorAPITimeoutError
 
 
 class Gpt4freeTranslator(AbstractTranslator):
-    logger = get_logger(LOGGER_PREFIX + __name__)
+    logging.getLogger('app')
 
     async def get_response(self, request_payload: dict) -> httpx.Response:
         @tenacity.retry(

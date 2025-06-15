@@ -1,0 +1,47 @@
+[project]
+name = "diploma"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "aio-pika",
+  "alembic",
+  "asyncpg",
+  "authlib",
+  "bcrypt",
+  "click",
+  "debugpy",
+  "fastapi",
+  "fastapi-pagination",
+  "httpx",
+  "httptools",
+  "itsdangerous",
+  "Jinja2",
+  "passlib",
+  "pika",
+  "pip",
+  "psycopg2-binary",
+  "pydantic",
+  "pydantic[email]",
+  "pydantic-settings",
+  "pytest",
+  "pytest-asyncio",
+  "python-dotenv",
+  "PyJWT",
+  "PyYAML",
+  "redis",
+  "requests",
+  "SQLAlchemy",
+  "starlette",
+  "stripe",
+  "tenacity",
+  "tiktoken",
+  "uvicorn",
+  "uvloop",
+  "websockets",
+  "markdown>=3.8",
+  "weasyprint>=65.1",
+  "python-multipart>=0.0.20",
+  "colorlog>=6.9.0",
+]

@@ -29,7 +29,7 @@ router = APIRouter(
     prefix='/configs',
     tags=['Configs']
 )
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('app')
 
 
 @router.get(

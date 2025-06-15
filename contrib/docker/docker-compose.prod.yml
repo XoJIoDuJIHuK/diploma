@@ -17,7 +17,6 @@ services:
     build:
       context: ../../
       dockerfile: contrib/docker/postgres/Dockerfile
-    restart: always
     env_file:
       - ../../.env
     command:
@@ -65,7 +64,6 @@ services:
 
   redis:
     image: redis:7.4.1
-    restart: always
     networks:
       - a
 

@@ -105,6 +105,7 @@ async def register(
             email_verified=False,
             password=registration_data.password,
             role=Role.user,
+            balance=0,
         ),
         db_session=db_session,
     )

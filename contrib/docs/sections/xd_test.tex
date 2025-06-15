@@ -1,0 +1,93 @@
+Первый параграф начинается здесь. Когда он закончится, 
+следующий блок – это формула, и между ним и предыдущим 
+абзацем должно быть ровно 14 pt (заботится equation).
+
+\begin{equation}\label{eq:sum_expenses}
+  \text{С}_\text{р} 
+    = \text{С}_\text{оз} 
+    + \text{С}_\text{дз} 
+    + \text{С}_\text{фсзн} 
+    + \text{С}_\text{бгс} 
+    + \text{С}_\text{пз} 
+    + \text{С}_\text{обп, обх}.
+\end{equation}
+% − Здесь abovedisplayskip=14pt дал 14pt между этим и предыдущим абзацем.
+% − Сразу после формулы belowdisplayskip=14pt даст 14pt вниз.
+
+\begin{symblock}
+  \begin{itemize}[nosep,
+                   leftmargin=0pt,
+                   labelindent=0pt,
+                   topsep=0pt,
+                   partopsep=0pt,
+                   itemsep=0pt,
+                   parsep=0pt]
+    \item[] где $\text{С}_\text{р}$ – итоговая себестоимость, руб.;
+    \item[] где $\text{С}_\text{оз}$ – основная зарплата, руб.;
+    \item[] где $\text{С}_\text{дз}$ – доп. выплаты, руб.;
+    % … и так далее
+  \end{itemize}
+\end{symblock}
+% − symblock сверху “тихо” (уже было 14pt снизу у equation), 
+%   а в конце symblock вставляет \vspace*{14pt}.
+
+\begin{gather*}
+  \text{С}_\text{р}
+    = 16171.92 + 2425.79 + 6323.22 + 111.59 + 148 + 6885.96
+    = 33266.47\,\text{руб.}
+\end{gather*}
+% − Перед gather* сработал \AtBeginEnvironment{gather*} → abovedisplayskip=0pt,
+%   то есть никакого « дополнительного » отступа сверху. 
+%   Но symblock уже вставил ровно 14pt, и больше ничего не прибавилось.
+% − После gather* belowdisplayskip=14pt сам по себе вставляет 14pt вниз.
+
+Следующий абзац обычного текста — и между ним и gather* ровно 14 pt 
+(этого “ниже” в gather* заботится belowdisplayskip).
+
+% ========================= Пример 2 =========================
+% параграф → формула → параграф
+
+А вот новый параграф.  
+
+\begin{equation}
+  a^2 + b^2 = c^2
+\end{equation}
+% − abovedisplayskip=14pt сработал сверху, ниже = 14pt.  
+
+Абзац после формулы.  % ровно 14 pt между ними (заботится belowdisplayskip).
+
+% ========================= Пример 3 =========================
+% параграф → формула → символы → параграф
+
+Новый параграф.  
+
+\begin{equation}
+  E = mc^2
+\end{equation}
+
+\begin{symblock}
+  \begin{itemize}[nosep, leftmargin=0pt, labelindent=0pt,
+                   topsep=0pt, partopsep=0pt, 
+                   itemsep=0pt, parsep=0pt]
+    \item[] $E$ – энергия, Дж;
+    \item[] $m$ – масса, кг;
+    \item[] $c$ – скорость света, м/с.
+  \end{itemize}
+\end{symblock}
+
+Новый абзац после символов.  % ровно 14 pt (symblock в конце вставил 14 pt).
+
+% ========================= Пример 4 =========================
+% параграф → формула → вычисления → параграф
+
+Следующий абзац.  
+
+\begin{equation}
+  F = ma
+\end{equation}
+
+\begin{gather*}
+  F = 10 \times 5 = 50\,\text{Н}.
+\end{gather*}
+
+Абзац далее.  % ровно 14 pt (ниже gather* стоит global belowdisplayskip=14pt

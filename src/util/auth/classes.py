@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.models import Session, User
 from src.database.repos.session import SessionRepo
-from src.logger import get_logger
+import logging
 from src.settings import jwt_config, LOGGER_PREFIX, Role
 from src.util.auth.helpers import (
     get_user_agent,
@@ -25,7 +25,7 @@ from src.util.common.helpers import get_ip
 from src.util.storage.classes import RedisHandler
 
 
-logger = get_logger(LOGGER_PREFIX + __name__)
+logger = logging.getLogger('app')
 
 
 class JWTBearer(HTTPBearer):
@@ -34,7 +34,7 @@ class JWTBearer(HTTPBearer):
     ):
         super(JWTBearer, self).__init__(auto_error=auto_error)
         self.roles = roles if roles else []
-        self.logger = get_logger(LOGGER_PREFIX + __name__)
+        self.logger = logging.getLogger('app')
 
     async def __call__(self, request: Request):
         credentials: HTTPAuthorizationCredentials
@@ -88,7 +88,7 @@ class JWTCookie(APIKeyCookie):
             name=cookie_name,
         )
         self.roles = roles if roles else []
-        self.logger = get_logger(LOGGER_PREFIX + __name__)
+        self.logger = logging.getLogger('app')
 
     async def __call__(self, request: Request):
         token: str
@@ -98,10 +98,7 @@ class JWTCookie(APIKeyCookie):
         )
 
         try:
-            token = await super(
-                JWTCookie,
-                self
-            ).__call__(request)
+            token = await super(JWTCookie, self).__call__(request)
         except HTTPException as e:
             self.logger.warning('User provided invalid credentials: %s', e)
             raise error_invalid_token

@@ -23,8 +23,6 @@ class EditArticleScheme(Scheme):
     language_id: int | None = None
 
 
-class ArticleUpdateLikeScheme(Scheme):
-    like: bool | None
 
 
 class CreateArticleScheme(UploadArticleScheme):
@@ -32,7 +30,6 @@ class CreateArticleScheme(UploadArticleScheme):
     user_id: uuid.UUID
     language_id: int | None = None
     original_article_id: uuid.UUID | None = None
-    like: bool | None = None
 
 
 class ArticleOutScheme(CreateArticleScheme):

@@ -1,0 +1,23 @@
+% Reset figure counter at each section
+\counterwithin{figure}{section}
+
+% Format caption as "X.Y – Caption text" with en-dash
+\DeclareCaptionLabelFormat{sectionimage}{#1~#2~--~}
+\captionsetup{
+  labelformat=sectionimage,
+  labelsep=none,
+  skip=6pt,  % Space between image and caption
+  belowskip=-8pt  % Reduce space after caption (adjust this value)
+}
+\captionsetup[figure]{name=Рисунок}  % Change from "Рис." to "Рисунок"
+% Set spacing around figures
+% \setlength{\intextsep}{14pt}  % Space before and after figure
+
+% Command for image with optional border
+\newcommand{\borderedimage}[3][1\linewidth]{%
+  \ifthenelse{\equal{#3}{yes}}{%
+    \fbox{\includegraphics[width=#1]{#2}}%
+  }{%
+    \includegraphics[width=#1]{#2}%
+  }%
+}

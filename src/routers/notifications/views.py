@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.websockets import WebSocketDisconnect
 
 from src.depends import get_session, validate_token_for_ws
-from src.logger import get_logger
+import logging
 from src.responses import BaseResponse, SimpleListResponse
 from src.routers.notifications.schemes import NotificationOutScheme
 from src.database.repos.notification import NotificationRepo
@@ -22,7 +22,7 @@ from src.util.storage.classes import RedisHandler
 from src.util.time.helpers import get_utc_now
 
 router = APIRouter(prefix='/notifications', tags=['Notifications'])
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 @router.get('/', response_model=SimpleListResponse[NotificationOutScheme])

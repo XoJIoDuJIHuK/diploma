@@ -5,9 +5,9 @@ from src.database.models import (
     StylePrompt,
     Language,
 )
-from src.logger import get_logger
+import logging
 
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 def estimate_translation_tokens(

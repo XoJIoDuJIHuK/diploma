@@ -1,0 +1,19 @@
+\AtBeginDocument{
+  \counterwithin{lstlisting}{section}
+  \renewcommand{\thelstlisting}{\thesection.\arabic{lstlisting}}
+}
+
+\lstdefinestyle{mystyle}{
+  aboveskip=16pt,           % for some reason 14pt produces 12pt real distance
+  abovecaptionskip=4.7pt,   % for some reason 6pt produces 7.6pt real distance
+  belowcaptionskip=12pt,    % for some reason 14pt produces 16pt real distance
+  belowskip=0pt,
+  basicstyle=\ttfamily\fontsize{12pt}{14pt}\selectfont,
+  captionpos=b,
+  frame=single,
+  breaklines=true,
+  % shifts to make borders fit inside page boundaries
+  xleftmargin=\dimexpr\fboxsep+\fboxrule\relax,
+  xrightmargin=\dimexpr\fboxsep+\fboxrule\relax,
+}
+\lstset{style=mystyle}

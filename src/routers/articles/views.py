@@ -1,3 +1,5 @@
+import io
+from urllib.parse import quote
 import uuid
 
 from fastapi import (
@@ -8,10 +10,11 @@ from fastapi import (
     status,
     Query,
 )
+from fastapi.responses import JSONResponse, StreamingResponse
 
-from fastapi.responses import JSONResponse
+from markdown import Markdown
+
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from src.depends import get_session
 from src.http_responses import get_responses
 from src.pagination import PaginationParams, get_pagination_params
@@ -22,13 +25,14 @@ from src.routers.articles.schemes import (
     EditArticleScheme,
     UploadArticleScheme,
     ArticleListItemScheme,
-    ArticleUpdateLikeScheme,
 )
 from src.database.repos.article import ArticleRepo
 from src.database.repos.report import ReportRepo
 from src.settings import Role
 from src.util.auth.classes import JWTCookie
 from src.util.auth.schemes import UserInfo
+
+from weasyprint import HTML
 
 router = APIRouter(prefix='/articles', tags=['Articles'])
 article_not_found_error = HTTPException(
@@ -83,6 +87,108 @@ async def get_article(
     return DataResponse(data={'article': article_scheme})
 
 
+@router.get('/{article_id}/download/')
+async def download_article(
+    article_id: uuid.UUID = Path(),
+    user_info: UserInfo = Depends(JWTCookie(roles=[Role.user])),
+    db_session: AsyncSession = Depends(get_session),
+):
+    article = await ArticleRepo.get_by_id(
+        article_id=article_id,
+        db_session=db_session,
+    )
+    if article.user_id != user_info.id:
+        raise article_not_found_error
+    try:
+        md = Markdown(
+            extensions=[
+                'markdown.extensions.extra',  # includes tables, fenced_code, footnotes…
+                'markdown.extensions.codehilite',  # highlight code blocks
+            ]
+        )
+
+        html_content = md.convert(article.text)
+
+        full_html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    margin: 40px;
+                }}
+                code {{
+                    background-color: #f5f5f5;
+                    padding: 2px 4px;
+                    border-radius: 3px;
+                }}
+                pre {{
+                    background-color: #f5f5f5;
+                    padding: 10px;
+                    border-radius: 3px;
+                    overflow-x: auto;
+                }}
+                blockquote {{
+                    border-left: 4px solid #ddd;
+                    padding-left: 15px;
+                    color: #555;
+                }}
+                table {{
+                    border-collapse: collapse;
+                    width: 100%;
+                }}
+                th, td {{
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }}
+                th {{
+                    background-color: #f2f2f2;
+                }}
+            </style>
+            <title>{article.title}</title>
+        </head>
+        <body>
+            {html_content}
+        </body>
+        </html>
+        """
+
+        pdf_bytes = HTML(string=full_html).write_pdf()
+        assert pdf_bytes is not None
+
+        raw_filename = (
+            f'{article.title.replace(" ", "_")}-'
+            + (
+                article.language.iso_code
+                if article.language_id is not None
+                else 'NULL'
+            )
+            + '.pdf'
+        )
+
+        # quote(...) will percent‐encode any non‐ASCII character:
+        quoted = quote(
+            raw_filename, safe=''
+        )  # “safe=” means everything outside A-Z a-z 0-9 gets %XX-encoded
+        # Use RFC 5987 syntax in the header
+        content_disposition = f"attachment; filename*=UTF-8''{quoted}"
+
+        return StreamingResponse(
+            io.BytesIO(pdf_bytes),
+            media_type='application/pdf',
+            headers={
+                'Content-Disposition': content_disposition,
+                'Content-Length': str(len(pdf_bytes)),
+            },
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.post(
     '/',
     response_model=DataResponse.single_by_key('article', ArticleOutScheme),
@@ -128,13 +234,10 @@ async def update_article(
         article.title = new_article_data.title
     if new_article_data.text is not None:
         article.text = new_article_data.text
-    db_session.add(article)
-    await db_session.refresh(article)
+    await db_session.flush()
     return DataResponse(
         data={'article': ArticleOutScheme.model_validate(article)}
     )
-
-
 
 
 @router.delete(
@@ -153,6 +256,3 @@ async def delete_article(
         status_code=status.HTTP_200_OK,
         content={'message': f'Статья {article_id} удалена'},
     )
-    # return DataResponse(
-    #     data={'article': ArticleOutScheme.model_validate(article)}
-    # )

@@ -1,0 +1,191 @@
+\documentclass[14pt]{extarticle}
+
+% —————————————————————————————————————————————————————————————
+% 1) ПАКЕТЫ И ОСНОВНЫЕ НАСТРОЙКИ
+% —————————————————————————————————————————————————————————————
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+\usepackage[russian,english]{babel}
+\selectlanguage{russian}
+
+\usepackage[a4paper,left=30mm,right=15mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{setspace}
+\singlespacing
+\usepackage{indentfirst}
+\setlength{\parindent}{12.5mm}
+\setlength{\parskip}{0pt}
+
+\usepackage{lua-visual-debug}
+
+\usepackage{amsmath}    % equation, gather*, multline* и пр.
+\usepackage{enumitem}   % для itemize с “nosep, topsep=0pt” и т. д.
+\usepackage{etoolbox}   % для \AtBeginEnvironment (при желании можно не использовать)
+
+% —————————————————————————————————————————————————————————————
+% 2) ОБНУЛЯЕМ ВСЕ СТАНДАРТНЫЕ SKIP'Ы ВОКРУГ DISPLAY-ОКРУЖЕНИЙ
+% Это гарантирует, что LaTeX НЕ будет подставлять никакие «автоматические»
+% 14–25 pt перед/после equation, gather*, multline* и т. д.
+% —————————————————————————————————————————————————————————————
+\AtBeginDocument{%
+  \setlength{\abovedisplayskip}{0pt}%
+  \setlength{\abovedisplayshortskip}{0pt}%
+  \setlength{\belowdisplayskip}{0pt}%
+  \setlength{\belowdisplayshortskip}{0pt}%
+}
+
+% —————————————————————————————————————————————————————————————
+% 3) ОПРЕДЕЛЯЕМ «EQBLOCK», «SYMBLOCK» И «CALCBLOCK»
+% Эти три окружения сами вставляют по 14pt там, где нужно.
+% —————————————————————————————————————————————————————————————
+\makeatletter
+
+% eqblock: ровно 14pt сверху И 14pt снизу
+\newenvironment{eqblock}{%
+  \par\vspace*{14pt}\noindent  % 14pt перед формулой
+}{%
+  \vspace*{14pt}\par          % 14pt после формулы
+}
+
+% symblock: 0pt сверху (т. к. eqblock концу уже дал 14pt), 14pt снизу
+\newenvironment{symblock}{%
+  \par\noindent  % 0pt сверху, предыдущий eqblock уже вставил 14pt внизу
+}{%
+  \vspace*{14pt}\par  % 14pt после списка символов
+}
+
+% calcblock: 0pt сверху (т. к. symblock концу уже дал 14pt), 14pt снизу
+\newenvironment{calcblock}{%
+  \par\noindent  % 0pt сверху
+}{%
+  \vspace*{14pt}\par  % 14pt после блока вычислений
+}
+
+\makeatother
+
+% —————————————————————————————————————————————————————————————
+% 4) РЕКОМЕНДУЕМОЕ ОКРУЖЕНИЕ ДЛЯ ДЛИННЫХ ВЫЧИСЛЕНИЙ (чтобы автоматом было
+%    перенесение по ширине страницы). Если краткая запись, можно и gather*,
+%    но тогда придётся вручную ставить \\ там, где нужно переносить.
+% —————————————————————————————————————————————————————————————
+% Здесь показываем пример с multline*
+% (ниже в тексте вы его увидите в действии).
+
+% —————————————————————————————————————————————————————————————
+% БОЛЬШЕ НИЧЕГО МЕНЯТЬ НЕ НУЖНО — дальше идёт тело документа
+% —————————————————————————————————————————————————————————————
+
+\begin{document}
+
+% =========================================
+% ПРИМЕР 1: Параграф → Формула → Символы → Вычисления → Параграф
+% =========================================
+
+Первый параграф начинается здесь. Когда он закончится, 
+между ним и формулой должно быть ровно 14 pt (eqblock сверху).
+
+\begin{eqblock}
+  \begin{equation}\label{eq:sum_expenses}
+    \text{С}_\text{р} 
+      = \text{С}_\text{оз} 
+      + \text{С}_\text{дз} 
+      + \text{С}_\text{фсзн} 
+      + \text{С}_\text{бгс} 
+      + \text{С}_\text{пз} 
+      + \text{С}_\text{обп, обх}.
+  \end{equation}
+\end{eqblock}
+% — eqblock сверху вставил 14pt между предыдущим абзацем и формулой,
+%   eqblock снизу вставит 14pt между формулой и списком символов.
+
+\begin{symblock}
+  \begin{itemize}[nosep,
+                   leftmargin=0pt,
+                   labelindent=0pt,
+                   topsep=0pt,
+                   partopsep=0pt,
+                   itemsep=0pt,
+                   parsep=0pt]
+    \item[] где $\text{С}_\text{р}$  – итоговая себестоимость, руб.;
+    \item[] где $\text{С}_\text{оз}$ – основная зарплата, руб.;
+    \item[] где $\text{С}_\text{дз}$ – доп. выплаты, руб.;
+    % … остальные пункты …
+  \end{itemize}
+\end{symblock}
+% — symblock снизу вставит 14pt между списком символов и следующим блоком.
+
+% ДЛИННЫЕ ВЫЧИСЛЕНИЯ:
+\begin{calcblock}
+  \begin{multline*}
+    \text{С}_\text{р} = 16171.92 
+      + 2425.79 
+      + 6323.22 \\
+      + 111.59 
+      + 148 
+      + 6885.96 
+      = 33266.47\,\text{руб.}
+  \end{multline*}
+\end{calcblock}
+% — calcblock снизу вставит 14pt между вычислениями и следующим абзацем.
+
+Следующий абзац обычного текста.  % ровно 14 pt от calcblock.
+
+% =========================================
+% ПРИМЕР 2: Параграф → Формула → Параграф (без блока символов и вычислений)
+% =========================================
+
+Новый абзац перед формулой.  
+
+\begin{eqblock}
+  \begin{equation}
+    a^2 + b^2 = c^2
+  \end{equation}
+\end{eqblock}
+
+Следующий абзац.  % ровно 14 pt между формулой и этим абзацем (eqblock снизу).
+
+% =========================================
+% ПРИМЕР 3: Параграф → Формула → Символы → Параграф (без вычислений)
+% =========================================
+
+Новый параграф.  
+
+\begin{eqblock}
+  \begin{equation}
+    E = mc^2
+  \end{equation}
+\end{eqblock}
+
+\begin{symblock}
+  \begin{itemize}[nosep, leftmargin=0pt, labelindent=0pt,
+                   topsep=0pt, partopsep=0pt, itemsep=0pt, parsep=0pt]
+    \item[] $E$ – энергия, Дж;
+    \item[] $m$ – масса, кг;
+    \item[] $c$ – скорость света, м/с.
+  \end{itemize}
+\end{symblock}
+
+Новый абзац после символов.  % ровно 14 pt (symblock снизу).
+
+% =========================================
+% ПРИМЕР 4: Параграф → Формула → Вычисления → Параграф (без символов)
+% =========================================
+
+Следующий абзац.  
+
+\begin{eqblock}
+  \begin{equation}
+    F = ma
+  \end{equation}
+\end{eqblock}
+
+\begin{calcblock}
+  \begin{multline*}
+    F = 10 \times 5 
+      = 50\,\text{Н}.
+  \end{multline*}
+\end{calcblock}
+
+Абзац далее.  % ровно 14 pt (calcblock снизу).
+
+\end{document}

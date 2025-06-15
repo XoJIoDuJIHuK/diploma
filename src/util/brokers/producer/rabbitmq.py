@@ -1,9 +1,9 @@
 import json
 from pika import BlockingConnection, ConnectionParameters, credentials
-from src.logger import get_logger
+import logging
 from src.settings import rabbitmq_config
 
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 def publish_message(routing_key: str, message: dict):

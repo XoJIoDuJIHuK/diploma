@@ -1,7 +1,7 @@
 <template>
   <div class="reports-container">
     <!-- FILTERS & SORT CONTROLS -->
-    <v-container class="pa-0 mb-6">
+    <v-container>
       <v-row align="center" justify="space-between" no-gutters>
         <!-- Status filter -->
         <v-col cols="12" sm="4" class="pr-sm-2">
@@ -192,7 +192,7 @@ watch(
 <style scoped>
 .reports-container {
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 24px auto 24px auto;
 }
 
 .v-card {

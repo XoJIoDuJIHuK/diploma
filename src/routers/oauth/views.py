@@ -9,7 +9,7 @@ from fastapi import (
 from fastapi.responses import RedirectResponse
 
 from src.database.repos.user import UserRepo
-from src.logger import get_logger
+import logging
 from src.settings import oauth_config, OAuthProvider, Role
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -25,7 +25,7 @@ router = APIRouter(
     prefix='/oauth',
     tags=['OAuth'],
 )
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 @router.get('/login/')
@@ -43,6 +43,7 @@ async def redirect_to_provider(
     }
     request.session.update(new_session_data)
     authorization_url = await provider_authorize.get_auth_url()
+    logger.info(authorization_url)
     return RedirectResponse(authorization_url)
 
 

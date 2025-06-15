@@ -1,0 +1,24 @@
+\setlist[itemize]{
+    label=--,
+    labelindent=\parindent,
+    leftmargin=*, % Use '*' to make leftmargin dependent on labelindent
+    labelsep=1em, % Adjust this spacing if needed
+    align=parleft, % Crucial for hanging indent effect
+    topsep=0pt,
+    partopsep=0pt,
+    itemsep=0pt,
+    parsep=0pt,
+}
+
+\setlist[enumerate]{
+    label=\arabic*.~,            % Use arabic numerals, dot, and non-breaking space
+    labelindent=\parindent,      % Indent labels to paragraph indent
+    leftmargin=\parindent,      % Set leftmargin to paragraph indent directly
+    labelsep=0em,             % Minimal space between label and text
+    align=left,                 % Left align text within the item's text block
+    itemindent=!,                % Set itemindent to the width of the label + labelsep
+    parsep=0pt,
+    topsep=0pt,
+    partopsep=0pt,
+    itemsep=0pt,
+}

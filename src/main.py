@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
 
+from src.logger import init_logger
 from src.handlers import (
     init_exc_handlers,
     init_responses,
@@ -26,7 +27,7 @@ from src.routers.users.views import router as users_router
 from starlette.middleware.cors import CORSMiddleware
 
 
-app = FastAPI(root_path='/api')
+app = FastAPI(title='GPTRanslate', root_path='/api')
 
 app.add_middleware(
     CORSMiddleware,
@@ -54,3 +55,5 @@ app.include_router(reports_router)
 app.include_router(sessions_router)
 app.include_router(users_router)
 app.include_router(translation_router)
+
+init_logger()

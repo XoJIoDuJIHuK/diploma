@@ -1,0 +1,19 @@
+\captionsetup[longtable]{name=Таблица}
+\counterwithin{table}{section}
+
+% Make longtable use full text width
+\setlength{\LTleft}{0pt}%
+\setlength{\LTright}{0pt}%
+\setlength{\LTpre}{0pt}%
+\setlength{\LTpost}{7pt}% % distance between table and following paragraph. There is ~7pt extra margin of unknown nature accounted
+
+
+\captionsetup[longtable]{
+    labelsep=none, % remove separator from "Continuation of table"
+    position=above, % position continuation text above the table body
+    justification=raggedright,
+    singlelinecheck=off, % disable centering for single line captions (for continuation text as well)
+    aboveskip=0pt, % it defines space between caption and table, not between caption and preceeding paragraph
+    belowskip=14pt % it defines space between caption and preceefing paragraph
+}
+\setlength{\tabcolsep}{0pt}

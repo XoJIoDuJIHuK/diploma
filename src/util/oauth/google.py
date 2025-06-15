@@ -4,7 +4,7 @@ import httpx
 
 from src.database.repos.user import UserRepo
 from src.database import get_session
-from src.logger import get_logger
+import logging
 from src.util.common.helpers import generate_random_string
 
 from src.settings import GoogleOauth2Config
@@ -13,7 +13,7 @@ from src.util.oauth.schemes import OAuthCredentialsScheme, OAuthUserInfoScheme
 from src.util.storage.abstract import AbstractStorage
 
 
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 class GoogleOAuth2Authorize(BaseOauth2Authorize):
@@ -89,7 +89,6 @@ class GoogleOAuth2Authorize(BaseOauth2Authorize):
             )
 
         user_data = user_response.json()
-        logger.error('USER DATA', user_data)
 
         if user_response.status_code != 200:
             raise HTTPException(

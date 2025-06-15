@@ -97,7 +97,6 @@ def upgrade() -> None:
         sa.Column('user_id', sa.UUID(), nullable=False),
         sa.Column('language_id', sa.Integer(), nullable=True),
         sa.Column('original_article_id', sa.UUID(), nullable=True),
-        sa.Column('like', sa.Boolean(), nullable=True),
         sa.Column('created_at', sa.DateTime(), nullable=False),
         sa.Column('deleted_at', sa.DateTime(), nullable=True),
         sa.ForeignKeyConstraint(

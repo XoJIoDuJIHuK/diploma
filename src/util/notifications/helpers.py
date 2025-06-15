@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database.repos.notification import NotificationRepo
-from src.logger import get_logger
+import logging
 from src.routers.notifications.schemes import (
     NotificationCreateScheme,
     NotificationOutScheme,
@@ -10,7 +10,7 @@ from src.settings import notification_config
 from src.util.storage.classes import RedisHandler
 
 
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 async def send_notification(

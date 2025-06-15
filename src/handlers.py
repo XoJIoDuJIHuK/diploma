@@ -8,7 +8,7 @@ from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from src.http_responses import Response500, http_responses
-from src.logger import get_logger
+import logging
 from src.responses import (
     BaseResponse,
     DebugErrorResponse,
@@ -18,7 +18,7 @@ from src.settings import LOGGER_PREFIX
 
 
 type ExceptionHandler = Callable[[Request, Exception], Response]
-logger = get_logger(LOGGER_PREFIX + '.exc')
+logger = logging.getLogger('app')
 
 
 def log_exception(

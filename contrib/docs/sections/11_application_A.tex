@@ -1,3 +1,9 @@
+\clearpage
+\section*{Приложение А}
+
+Исходный код наиболее значимых частей веб-приложения
+
+\begin{lstlisting}
 //src.routers.analytics.views.py
 @router.get(
     '/models-stats/'
@@ -8,6 +14,7 @@ async def get_models_stats(
 ):
     return await AnalyticsRepo.get_models_stats(db_session)
 
+
 @router.get(
     '/prompts-stats/'
 )
@@ -16,6 +23,8 @@ async def get_prompts_stats(
         db_session: AsyncSession = Depends(get_session)
 ):
     return await AnalyticsRepo.get_prompts_stats(db_session)
+
+
 
 
 //src.routers.articles.views.py
@@ -46,6 +55,7 @@ async def upload_article(
             'article': ArticleOutScheme.model_validate(article)
         }
     )
+
 
 @router.put(
     '/{article_id}/',
@@ -81,6 +91,7 @@ async def update_article(
         }
     )
 
+
 @router.delete(
     '/{article_id}/',
     response_model=DataResponse.single_by_key(
@@ -106,6 +117,8 @@ async def delete_article(
             'article': ArticleOutScheme.model_validate(article)
         }
     )
+
+
 
 
 //src.routers.auth.views.py
@@ -151,6 +164,7 @@ async def login(
     response = JSONResponse({'detail': 'Аутентифицирован'})
     return get_authenticated_response(response, tokens)
 
+
 @router.post(
     '/register/',
     response_model=BaseResponse,
@@ -184,6 +198,7 @@ async def register(
         db_session=db_session
     )
     return BaseResponse(message='Регистрация успешна. Проверьте почту')
+
 
 @router.post(
     '/restore-password/request/',
@@ -227,6 +242,7 @@ async def request_password_restoration_code(
     await producer.send_message(kafka_message.model_dump(mode='json'))
     return BaseResponse(message='Сообщение отправляется на почту')
 
+
 @router.patch(
     '/restore-password/confirm/',
     response_model=BaseResponse,
@@ -259,6 +275,8 @@ async def restore_password(
     return BaseResponse(message='Пароль успешно изменён')
 
 
+
+
 //src.routers.config.views.py
 @router.post(
     '/',
@@ -285,6 +303,7 @@ async def create_config(
         }
     )
 
+
 @router.put(
     '/{config_id}/',
     response_model=DataResponse.single_by_key(
@@ -310,6 +329,7 @@ async def update_config(
         }
     )
 
+
 @router.delete(
     '/{config_id}/',
     response_model=BaseResponse,
@@ -328,6 +348,8 @@ async def delete_config(
         db_session=db_session
     )
     return BaseResponse(message=f'Конфиг {config_name} удалён')
+
+
 
 
 //src.routers.models.views.py
@@ -358,6 +380,7 @@ async def create_model(
             'model': ModelOutScheme.model_validate(model)
         }
     )
+
 
 @router.put(
     '/{model_id}/',
@@ -398,6 +421,7 @@ async def update_model(
         }
     )
 
+
 @router.delete(
     '/{model_id}/',
     response_model=BaseResponse,
@@ -413,6 +437,8 @@ async def delete_model(
         db_session=db_session
     )
     return BaseResponse(message=result)
+
+
 
 
 //src.routers.oauth.views.py
@@ -436,6 +462,7 @@ async def redirect_to_provider(
     authorization_url = await provider_authorize.get_auth_url()
     return RedirectResponse(authorization_url)
 
+
 @router.get(
     '/{provider}/callback',
     summary='Validates auth code from provider and returns user\'s tokens',
@@ -457,6 +484,7 @@ async def callback(
         logger.error(error_message)
         raise Exception(error_message)
 
+
     provider_authorize = get_oauth_provider(
         provider=provider,
         storage=RedisHandler()
@@ -465,10 +493,12 @@ async def callback(
         request=request
     )
 
+
     user_data = await provider_authorize.get_user_info(auth_token)
     logger.error(user_data)
     user_id = user_data.id
     provider_user_id = (str(user_id) if user_id else None)
+
 
     if email := user_data.email:
         user = await UserRepo.get_by_email(
@@ -511,6 +541,8 @@ async def callback(
     return get_authenticated_response(response, tokens)
 
 
+
+
 //src.routers.prompts.views.py
 @router.post(
     '/',
@@ -533,6 +565,7 @@ async def create_prompt(
             'prompt': PromptOutScheme.model_validate(prompt)
         }
     )
+
 
 @router.put(
     '/{prompt_id}/',
@@ -558,6 +591,7 @@ async def update_prompt(
         }
     )
 
+
 @router.delete(
     '/{prompt_id}/',
     response_model=BaseResponse
@@ -572,6 +606,8 @@ async def delete_prompt(
         db_session=db_session
     )
     return BaseResponse(message='Промпт удалён')
+
+
 
 
 //src.routers.sessions.views.py
@@ -596,6 +632,7 @@ async def get_sessions(
         params=pagination
     )
 
+
 @router.post(
     '/close/',
     response_model=BaseResponse,
@@ -615,6 +652,7 @@ async def close_sessions(
         db_session=db_session
     )
     return BaseResponse(message='Все сессии успешно закрыты')
+
 
 //src.routers.reports.views.py
 @router.post(
@@ -653,6 +691,8 @@ async def create_report(
     )
 
 
+
+
 @router.put(
     '/articles/{article_id}/report/',
     response_model=DataResponse.single_by_key(
@@ -679,6 +719,8 @@ async def update_report(
             'report': ReportOutScheme.create(report)
         }
     )
+
+
 
 
 @router.patch(
@@ -727,6 +769,7 @@ async def update_report_status(
         }
     )
 
+
 @router.get(
     '/articles/{article_id}/report/comments/',
     response_model=SimpleListResponse[CommentOutScheme],
@@ -747,6 +790,7 @@ async def get_comments(
             db_session=db_session
         )
     )
+
 
 @router.post(
     '/articles/{article_id}/report/comments/',
@@ -793,6 +837,7 @@ async def create_comment(
         }
     )
 
+
 //src.routers.translation.views.py
 @router.post(
     '/',
@@ -835,10 +880,12 @@ async def create_translation(
             detail='Промпт не существует'
         )
 
+
     producer = KafkaProducer(
         bootstrap_servers=KafkaConfig.address,
         topic=KafkaConfig.translation_topic
     )
+
 
     for target_language_id in translation_data.target_language_ids:
         if not await LanguageRepo.exists(
@@ -863,6 +910,8 @@ async def create_translation(
             message.model_dump(mode='json')
         )
         return BaseResponse(message='Перевод запущен. Ожидайте')
+
+
 
 
 //src.routers.users.views.py
@@ -896,6 +945,7 @@ async def change_name(
     await db_session.commit()
     return BaseResponse(message='Имя успешно изменено')
 
+
 @router.post(
     '/',
     response_model=DataResponse.single_by_key(
@@ -918,6 +968,7 @@ async def create_user(
             'user': UserOutAdminScheme.model_validate(user)
         }
     )
+
 
 @router.put(
     '/{user_id}/',
@@ -944,6 +995,7 @@ async def update_user(
         }
     )
 
+
 @router.delete(
     '/{user_id}/',
     responses=get_responses(400, 401, 403, 409)
@@ -958,6 +1010,8 @@ async def delete_user(
         db_session=db_session
     )
     return BaseResponse(message='Пользователь удалён')
+
+
 
 
 //src.database.models.py
@@ -1006,6 +1060,8 @@ class User(Base):
     )
 
 
+
+
 class Session(Base):
     __tablename__ = f'{Database.prefix}sessions'
     id: Mapped[uuid.UUID] = mapped_column(
@@ -1039,6 +1095,8 @@ class Session(Base):
     )
 
 
+
+
 class ConfirmationCode(Base):
     __tablename__ = f'{Database.prefix}confirmation_codes'
     id: Mapped[int] = mapped_column(
@@ -1070,6 +1128,8 @@ class ConfirmationCode(Base):
     )
 
 
+
+
 class Language(Base):
     __tablename__ = f'{Database.prefix}languages'
     id: Mapped[int] = mapped_column(
@@ -1084,6 +1144,8 @@ class Language(Base):
         String,
         unique=True
     )
+
+
 
 
 class Article(Base):
@@ -1119,6 +1181,7 @@ class Article(Base):
         nullable=True
     )
 
+
     report: Mapped['Report'] = relationship(
         'Report',
         back_populates='article',
@@ -1138,6 +1201,8 @@ class Article(Base):
     )
 
 
+
+
 class ReportReason(Base):
     __tablename__ = f'{Database.prefix}report_reasons'
     id: Mapped[int] = mapped_column(
@@ -1152,6 +1217,8 @@ class ReportReason(Base):
         Integer,
         unique=True
     )
+
+
 
 
 class Report(Base):
@@ -1187,6 +1254,7 @@ class Report(Base):
         nullable=True
     )
 
+
     article: Mapped[Article] = relationship(
         'Article',
         back_populates='report',
@@ -1203,6 +1271,8 @@ class Report(Base):
         uselist=False,
         lazy='joined',
     )
+
+
 
 
 class Comment(Base):
@@ -1225,6 +1295,8 @@ class Comment(Base):
         DateTime,
         default=get_utc_now
     )
+
+
 
 
 class StylePrompt(Base):
@@ -1251,6 +1323,8 @@ class StylePrompt(Base):
     )
 
 
+
+
 class AIModel(Base):
     __tablename__ = f'{Database.prefix}ai_models'
     id: Mapped[int] = mapped_column(
@@ -1269,6 +1343,8 @@ class AIModel(Base):
         DateTime,
         nullable=True
     )
+
+
 
 
 class TranslationConfig(Base):
@@ -1303,6 +1379,8 @@ class TranslationConfig(Base):
         DateTime,
         nullable=True
     )
+
+
 
 
 class TranslationTask(Base):
@@ -1352,6 +1430,8 @@ class TranslationTask(Base):
     )
 
 
+
+
 class Notification(Base):
     __tablename__ = f'{Database.prefix}notifications'
     id: Mapped[uuid.UUID] = mapped_column(
@@ -1381,6 +1461,8 @@ class Notification(Base):
     )
 
 
+
+
 //tests.hot_load.py
 import asyncio
 import datetime
@@ -1392,9 +1474,8 @@ import time
 from collections import defaultdict
 from functools import wraps
 
+
 import httpx
-
-
 logger = logging.getLogger(__name__)
 
 
@@ -1409,52 +1490,42 @@ class HotLoad:
         self.deadline = datetime.datetime.now() + duration
         self.processes_number = processes_number
         self.workers_number = workers_number
-
         self.headers = {}
         self.tasks = []
         self.errors = 0  # find usage
         self.on_startup_callable = None
         self.on_teardown_callable = None
-
     def task(self, func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             return await func(*args, **kwargs)
-
         self.tasks.append(wrapper)
         return wrapper
-
     def on_startup(self, func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             return await func(*args, **kwargs)
         self.on_startup_callable = wrapper
         return wrapper
-
     def on_teardown(self, func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             return await func(*args, **kwargs)
         self.on_teardown_callable = wrapper
         return wrapper
-
     @staticmethod
     def get_median(results) -> float:
         return statistics.median(results) if results else 0
-
     @staticmethod
     def get_timestamp_now():
         return datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
     async def run_worker(
             self,
             worker_id: int
     ) -> int:
         logger.info('Running worker %s', worker_id)
-
         stats = defaultdict(list)
         total_requests = 0
-
         async with httpx.AsyncClient(headers=self.headers) as client:
             while self.deadline > datetime.datetime.now():
                 try:
@@ -1473,32 +1544,29 @@ class HotLoad:
                     logger.exception(e)
                     self.errors += 1
                 total_requests += 1
-
         return total_requests
-
     async def run_workers(self, worker_start_id: int) -> int:
         results = await asyncio.gather(*[
             self.run_worker(worker_id=i + worker_start_id)
             for i in range(self.workers_number)
         ])
         return sum(results)
-
     def run_process(self, process_number: int, *args) -> int:
         worker_start_id = process_number * self.workers_number
-
         loop = asyncio.get_event_loop()
         result = loop.run_until_complete(self.run_workers(worker_start_id))
         return result
+
 
     async def run(self) -> float:
         if self.on_startup_callable:
             self.headers = await self.on_startup_callable()
 
+
         with multiprocessing.Pool(processes=self.processes_number) as pool:
             results = pool.map(self.run_process, range(self.processes_number))
         mean_rps = sum(results) / self.duration.total_seconds()
-
         if self.on_teardown_callable:
             await self.on_teardown_callable()
-
         return mean_rps
+\end{lstlisting}

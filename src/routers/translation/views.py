@@ -18,7 +18,7 @@ from src.database.repos.prompt import PromptRepo
 from src.database.repos.translation_task import TaskRepo
 from src.database.repos.user import UserRepo
 from src.depends import get_session
-from src.logger import get_logger
+import logging
 from src.http_responses import get_responses
 from src.responses import BaseResponse
 from src.routers.translation.schemes import (
@@ -40,7 +40,7 @@ from src.util.translator.helpers import estimate_translation_tokens
 from src.util.brokers.producer.rabbitmq import publish_message
 
 router = APIRouter(prefix='/translation', tags=['Translation'])
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 
 
 @router.post('/simple/')
@@ -187,6 +187,7 @@ async def create_translation(
         * len(translation_data.target_language_ids)
         * model.token_multiplier
     )
+    logger.info('Estimated tokens amount: %s', estimated_tokens)
     if user.balance <= estimated_tokens:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

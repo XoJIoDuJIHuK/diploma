@@ -18,7 +18,7 @@ from src.util.db.helpers import update_object
 from src.util.time.helpers import get_utc_now
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('app')
 
 
 def name_conflicts_error(name):

@@ -46,7 +46,7 @@ export type StoreKeys = 'languages' | 'models' | 'prompts' | 'reportReasons'
 export const store = reactive({
   languages: {
     items: [] as Array<Language>,
-    getValue: function (index: number | null) {
+    getValue: function(index: number | null) {
       for (let lang of this.items) {
         if (lang.id === index) {
           return lang
@@ -54,7 +54,7 @@ export const store = reactive({
       }
       return null
     },
-    getSelectItems: function (): { value: number, title: string }[] {
+    getSelectItems: function(): { value: number, title: string }[] {
       return this.items.map((value) => ({
         value: value.id,
         title: value.name,
@@ -63,7 +63,7 @@ export const store = reactive({
   },
   models: {
     items: [] as Array<Model>,
-    getValue: function (index: number | null) {
+    getValue: function(index: number | null) {
       for (let lang of this.items) {
         if (lang.id === index) {
           return lang
@@ -71,7 +71,7 @@ export const store = reactive({
       }
       return null
     },
-    getSelectItems: function (): { value: number, title: string }[] {
+    getSelectItems: function(): { value: number, title: string }[] {
       return this.items.map((value) => ({
         value: value.id,
         title: value.show_name,
@@ -80,7 +80,7 @@ export const store = reactive({
   },
   prompts: {
     items: [] as Array<Prompt>,
-    getValue: function (index: number | null) {
+    getValue: function(index: number | null) {
       for (let lang of this.items) {
         if (lang.id === index) {
           return lang
@@ -88,7 +88,7 @@ export const store = reactive({
       }
       return null
     },
-    getSelectItems: function (): { value: number, title: string }[] {
+    getSelectItems: function(): { value: number, title: string }[] {
       return this.items.map((value) => ({
         value: value.id,
         title: value.title,
@@ -97,7 +97,7 @@ export const store = reactive({
   },
   reportReasons: {
     items: [] as Array<ReportReason>,
-    getValue: function (index: number | null) {
+    getValue: function(index: number | null) {
       for (let lang of this.items) {
         if (lang.id === index) {
           return lang
@@ -105,7 +105,7 @@ export const store = reactive({
       }
       return null
     },
-    getSelectItems: function (): { value: number, title: string }[] {
+    getSelectItems: function(): { value: number, title: string }[] {
       return this.items.map((value) => ({
         value: value.id,
         title: value.text,

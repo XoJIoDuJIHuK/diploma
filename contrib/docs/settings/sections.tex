@@ -1,0 +1,75 @@
+% Customize section titles
+\newlength{\customsectionindent}
+\setlength{\customsectionindent}{12.5mm}
+
+\titleformat{\section}
+  [block]
+  {\normalfont\bfseries}
+  {\hspace*{\customsectionindent}\thesection}
+  {6pt}
+  {}
+  [\thispagestyle{empty}]
+\titlespacing*{\section}{0pt}{0pt}{0pt} % Remove default spacing after section
+
+\titleformat{\subsection}
+  [block]
+  {\normalfont\bfseries}
+  {\hspace*{\customsectionindent}\thesubsection}
+  {6pt}
+  {}
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
+\titleformat{\subsubsection}
+  [block]
+  {\normalfont\bfseries}
+  {\hspace*{\customsectionindent}\thesubsubsection}
+  {6pt}
+  {}
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+
+\titleformat{name=\section,numberless}
+  [block]
+  {\normalfont\normalsize\bfseries}
+  {}
+  {0pt}
+  {\centering}
+  [\thispagestyle{empty}]
+\titlespacing*{name=\section, numberless}{0pt}{0pt}{18pt}
+\titlespacing*{\paragraph}{0pt}{0pt}{0pt}
+
+% God save us
+\newcommand{\SubsubsectionBetweenParagraphs}[1]{%
+  \vspace{18pt}%
+  \subsubsection{#1}%
+  \vspace{12pt}%
+}
+\newcommand{\SubsubsectionWithParagraph}[1]{%
+  \subsubsection{#1}%
+  \vspace{12pt}%
+}
+\newcommand{\SubsectionWithSubsubsection}[1]{%
+  \subsection{#1}%
+  \vspace{6pt}%
+}
+\newcommand{\SubsectionWithParagraph}[1]{%
+  \subsection{#1}%
+  \vspace{12pt}%
+}
+\newcommand{\SubsectionBetweenParagraphs}[1]{%
+  \vspace{18pt}%
+  \subsection{#1}%
+  \vspace{12pt}%
+}
+\newcommand{\SubsubsectionAfterSubsubsection}[1]{%
+  \vspace{6pt}%
+  \subsubsection{#1}%
+  \vspace{12pt}%
+}
+\newcommand{\SectionWithParagraph}[1]{%
+  \section{#1}%
+  \vspace{18pt}%
+}
+\newcommand{\SectionWithSubsection}[1]{%
+  \section{#1}%
+  \vspace{12pt}%
+}

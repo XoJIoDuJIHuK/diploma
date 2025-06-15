@@ -7,12 +7,12 @@ import click
 from src.database import get_session
 from src.database.models import Language
 
-from src.logger import get_logger
+import logging
 from src.settings import LOGGER_PREFIX
 
 from sqlalchemy.future import select
 
-logger = get_logger(LOGGER_PREFIX + __name__)
+logger = logging.getLogger('app')
 
 
 @click.command()

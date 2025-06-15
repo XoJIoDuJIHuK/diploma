@@ -20,18 +20,24 @@ from sqlalchemy import select
 @click.option('-e', '--email', help='Email of user', default='admin@d.com')
 @click.option('-n', '--name', help='Name of user', default='Admin')
 def create_admin(
-        name: str,
-        password: str,
-        email: str,
+    name: str,
+    password: str,
+    email: str,
 ) -> None:
     async def async_function() -> Optional[str]:
         """
         Asynchronous function that handles the creation or update of an admin
         """
         async with get_session() as db_session:
-            user = (await db_session.execute(select(User).where(
-                User.email == email
-            ))).scalars().first()
+            user = (
+                (
+                    await db_session.execute(
+                        select(User).where(User.email == email)
+                    )
+                )
+                .scalars()
+                .first()
+            )
 
             if user:
                 return 'Email is taken'
@@ -50,11 +56,11 @@ def create_admin(
                     role=Role.admin,
                     password_hash=hashed_password,
                     created_at=get_utc_now(),
-                    deleted_at=None
+                    deleted_at=None,
                 )
             db_session.add(user)
+            await db_session.flush()
 
-            await db_session.refresh(user)
             return 'User created'
 
     loop = asyncio.get_event_loop()

@@ -1,5 +1,5 @@
 <template>
-  <SimpleTranslator v-if="Config.is_simplified_translation_enabled" />
+  <SimpleTranslator v-if="Config.is_simplified_translation_enabled && isSimpleTranslatorSeen" />
 
   <v-container>
     <v-row class="text-center">
@@ -23,11 +23,7 @@
       <v-col cols="12" sm="4" v-for="(feature, index) in features" :key="index">
         <v-card class="pa-4 mx-auto" elevation="2" max-width="350">
           <v-container class="flex flex-row justify-center h-auto">
-            <v-icon
-              :icon="feature.icon"
-              size="x-large"
-              color="primary"
-            ></v-icon>
+            <v-icon :icon="feature.icon" size="x-large" color="primary"></v-icon>
           </v-container>
           <v-card-title class="text-h5 mt-2">{{ feature.title }}</v-card-title>
           <v-card-text class="text-body-2">{{
@@ -51,10 +47,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { Config } from "../settings";
 import { Chart, registerables } from "chart.js";
 import SimpleTranslator from "../components/SimpleTranslator.vue";
+
+const isSimpleTranslatorSeen = computed(() => {
+  const cachedUserInfoString = localStorage.getItem(Config.userInfoProperty);
+  const userInfo = cachedUserInfoString === null ? {} : JSON.parse(cachedUserInfoString);
+  return userInfo.role === undefined || userInfo.role === Config.userRoles.guest || userInfo.role === Config.userRoles.user;
+})
 
 const features = ref([
   {
@@ -162,6 +164,7 @@ onMounted(async () => {
 .v-row {
   max-height: max-content;
 }
+
 .v-col {
   max-height: max-content;
 }

@@ -16,9 +16,8 @@ class BaseOauth2Authorize(abc.ABC):
     """
     def __init__(
             self,
-            config: Union[
+            config: 
                 GoogleOauth2Config,
-            ],
             credentials: OAuthCredentialsScheme,
             storage: AbstractStorage,
     ):

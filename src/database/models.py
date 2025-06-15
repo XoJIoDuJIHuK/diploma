@@ -1,5 +1,4 @@
 import datetime
-import decimal
 import enum
 import uuid
 
@@ -162,7 +161,6 @@ class Article(Base):
         ForeignKey(f'{database_config.prefix}articles.id', ondelete='CASCADE'),
         nullable=True,
     )
-    # like: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime, default=get_utc_now
     )

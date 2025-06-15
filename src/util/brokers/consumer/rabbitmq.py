@@ -26,7 +26,6 @@ from src.database.repos.model import ModelRepo
 from src.database.repos.prompt import PromptRepo
 from src.database.repos.translation_task import TaskRepo
 from src.database.repos.user import UserRepo
-from src.logger import get_logger
 from src.routers.articles.schemes import CreateArticleScheme
 from src.routers.notifications.schemes import NotificationCreateScheme
 from src.settings import notification_config, rabbitmq_config
@@ -37,7 +36,7 @@ from src.util.translator.exceptions import TranslatorAPITimeoutError
 from aio_pika import connect, logger as pika_logger
 from aio_pika.abc import AbstractIncomingMessage
 
-logger = get_logger(__name__)
+logger = logging.getLogger('app')
 pika_logger.setLevel(logging.WARNING)
 
 

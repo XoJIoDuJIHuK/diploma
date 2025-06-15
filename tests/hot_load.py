@@ -11,7 +11,7 @@ from functools import wraps
 import httpx
 
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('app')
 
 
 class HotLoad:
